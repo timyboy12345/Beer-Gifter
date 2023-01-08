@@ -1,58 +1,16 @@
-<script setup lang="ts">
-import {inject, ref} from 'vue';
-import {useUserStore} from "@/stores/user";
-import {useCredentialsStore} from "@/stores/credentials";
-import router from "@/router";
-import Alert from '@/components/Alert.vue';
-
-const userStore = useUserStore();
-const credentialsStore = useCredentialsStore();
-
-const nameInput = ref(null);
-const getUntappdUser: any = inject('getUntappdUserInfo');
-
-let loading = ref(false);
-const error = ref(null);
-
-function submit() {
-  loading.value = true;
-  error.value = null;
-
-  getUntappdUser(nameInput.value)
-      .then((user: any) => {
-        userStore.setUser(user);
-        // @ts-ignore
-        userStore.setUserName(nameInput.value);
-        userStore.resetCheckins();
-
-        router.push({name: "untappd-loading"});
-      })
-      // @ts-ignore
-      .catch((err) => {
-        if (err.meta && err.meta.code === 404 && err.meta.error_detail) {
-          error.value = err.meta.error_detail;
-        } else {
-          throw err;
-        }
-      })
-      .then(() => {
-        loading.value = false;
-      })
-}
-</script>
-
 <template>
   <div>
     <h1 class="text-2xl font-bold text-yellow-800">Beer Gifter</h1>
     <p class="text-gray-800">Don't know what to buy for your beer-loving friends? We know the struggle! Don't worry,
       with this tool, you can just enter their Untappd profile-name, and off you go finding the perfect beer to buy.</p>
 
-    <RouterLink v-if="!credentialsStore.isLoggedIn" to="/oauth/redirect" class="block mt-8 bg-yellow-800 text-white py-2 px-4 rounded">
+    <RouterLink v-if="!credentialsStore.isLoggedIn" to="/oauth/redirect"
+                class="block mt-8 bg-yellow-800 text-white py-2 px-4 rounded">
       Log in met Untappd
     </RouterLink>
 
     <Alert
-        v-if="userStore.isLoggedIn"
+        v-if="userStore.isLoggedIn && userStore.beers.length > 0"
         class="my-8"
         header="Er zijn al gegevens opgehaald"
     >
@@ -81,3 +39,54 @@ function submit() {
     </div>
   </div>
 </template>
+
+<script>
+import {inject} from 'vue';
+import {useUserStore} from "@/stores/user";
+import {useCredentialsStore} from "@/stores/credentials";
+import router from "@/router";
+import Alert from '@/components/Alert.vue';
+
+export default {
+  data() {
+    return {
+      nameInput: '',
+      loading: false,
+      error: null
+    }
+  },
+  components: {Alert},
+  setup() {
+    const userStore = useUserStore();
+    const credentialsStore = useCredentialsStore();
+    const getUntappdUser = inject('getUntappdUserInfo');
+
+    return {userStore, credentialsStore, getUntappdUser};
+  },
+  methods: {
+    submit() {
+      this.loading = true;
+      this.error = null;
+
+      this.getUntappdUser(this.nameInput)
+          .then((user) => {
+            this.userStore.setUser(user);
+            this.userStore.setUserName(this.nameInput);
+            this.userStore.resetCheckins();
+
+            router.push({name: "untappd-loading"});
+          })
+          .catch((err) => {
+            if (err.meta && err.meta.code === 404 && err.meta.error_detail) {
+              this.error = err.meta.error_detail;
+            } else {
+              throw err;
+            }
+          })
+          .then(() => {
+            this.loading = false;
+          })
+    }
+  }
+}
+</script>

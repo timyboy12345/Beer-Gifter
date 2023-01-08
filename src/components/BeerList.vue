@@ -1,5 +1,5 @@
 <template>
-  <List :header="header" :items="beers" :link="getLink">
+  <List :header="header" :items="beers" :link="getLink" :headerLink="headerLink">
     <template v-slot:img="{ item }">
       <v-lazy-image alt="Logo of beer" :src="item.beer_label" class="w-full h-full object-cover object-center" />
     </template>
@@ -11,7 +11,7 @@
 
 <script>
 import List from "./List.vue";
-import ListMixin from "@/mixins/ListMixin.js";
+import ListMixin from "../mixins/ListMixin.js";
 import VLazyImage from "v-lazy-image";
 
 export default {

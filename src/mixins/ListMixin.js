@@ -4,6 +4,11 @@ export default {
             type: String,
             required: false,
             default: null
+        },
+        headerLink: {
+            type: String,
+            required: false,
+            default: null
         }
     }
 }

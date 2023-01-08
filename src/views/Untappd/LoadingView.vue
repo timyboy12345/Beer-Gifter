@@ -12,46 +12,57 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import {inject} from 'vue';
 
 import {useUserStore} from "@/stores/user";
 import router from "@/router";
 import Spinner from "@/components/Spinner.vue";
 
-const userStore = useUserStore();
+export default {
+  data() {
+    return {
+      // TODO: Remove this counter mechanism
+      fetches: 0,
+      maxTries: (typeof process === 'object' && process.env.ENVIRONMENT === 'production') ? 4 : 1
+    }
+  },
+  components: {Spinner},
+  setup() {
+    const userStore = useUserStore();
+    const getUntappdUserCheckins = inject('getUntappdUserCheckins')
 
-const getUntappdUserCheckins = inject('getUntappdUserCheckins')
+    return {userStore, getUntappdUserCheckins}
+  },
+  created() {
+    this.fetchPage();
+  },
+  methods: {
+    fetchPage(maxId) {
+      this.userStore.setImporting(true);
 
-// TODO: Remove this counter mechanism
-let fetches = 0;
-const maxTries = 2;
+      this.getUntappdUserCheckins(this.userStore.userName, maxId)
+          .then((results) => {
+            this.fetches++;
 
-function fetchPage(maxId) {
-  userStore.setImporting(true);
+            this.userStore.addCheckins(results.checkins.items);
 
-  getUntappdUserCheckins(userStore.userName, maxId)
-      .then((results) => {
-        fetches++;
-
-        userStore.addCheckins(results.checkins.items);
-
-        if (results.pagination.max_id && fetches <= maxTries - 1) {
-          fetchPage(results.pagination.max_id);
-        } else {
-          userStore.recalculate()
-              .then(() => {
-                userStore.setImporting(false);
-                router.push({name: 'untappd-dashboard'});
-              });
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        alert("Could not retrieve all beers, but we're using what we did retrieve.");
-        router.push({name: 'untappd-dashboard'});
-      });
+            if (results.pagination.max_id && this.fetches <= this.maxTries - 1) {
+              this.fetchPage(results.pagination.max_id);
+            } else {
+              this.userStore.recalculate()
+                  .then(() => {
+                    this.userStore.setImporting(false);
+                    router.push({name: 'untappd-dashboard'});
+                  });
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+            alert("Could not retrieve all beers, but we're using what we did retrieve.");
+            router.push({name: 'untappd-dashboard'});
+          });
+    }
+  }
 }
-
-fetchPage();
 </script>
