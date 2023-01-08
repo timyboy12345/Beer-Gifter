@@ -17,7 +17,7 @@ function showMenuLinks() {
     </RouterLink>
 
     <div class="wrapper text-sm lg:text-md lg:md-0">
-      <nav class="flex flex-row gap-x-4" v-if="showMenuLinks">
+      <nav class="flex flex-row gap-x-4" v-if="showMenuLinks()">
         <!--        <RouterLink class="block" v-if="!userStore.isLoggedIn" to="/">Home</RouterLink>-->
         <RouterLink class="block" to="/untappd/dashboard">Algemene informatie</RouterLink>
         <RouterLink class="block" to="/untappd/beers">Bieren</RouterLink>
