@@ -22,7 +22,7 @@ const userStore = useUserStore();
 function favoriteCities() {
   const locations = [];
 
-  this.userStore.venues.forEach((venue) => {
+  userStore.venues.forEach((venue) => {
     const foundLocation = locations.find((l) => l.city === venue.location.venue_city);
 
     if (!foundLocation) {

@@ -32,8 +32,6 @@ const maxTries = 2;
 function fetchPage(maxId) {
   getUntappdUserCheckins(userStore.userName, maxId)
       .then((results) => {
-        console.log(results);
-
         fetches++;
 
         userStore.addCheckins(results.checkins.items);

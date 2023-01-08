@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
+import { version } from '../../package.json';
 
-// @ts-ignore
 export const useUserStore = defineStore('user', {
     state: () => ({
         user: null,
         userName: null,
-        checkins: []
+        checkins: [],
+        version: version,
     }),
     actions: {
         setUser(user: any) {

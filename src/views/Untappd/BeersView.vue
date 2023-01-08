@@ -22,7 +22,7 @@ const userStore = useUserStore();
 function favoriteBeers() {
   const beers = [];
 
-  this.userStore.checkins.forEach((checkin) => {
+  userStore.checkins.forEach((checkin) => {
     const foundBeer = beers.find((l) => l.id === checkin.beer.bid);
 
     if (!foundBeer) {
