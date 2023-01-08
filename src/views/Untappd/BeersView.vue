@@ -42,17 +42,12 @@ function beers() {
 }
 
 function breweries() {
-  const breweries = userStore.beers
-      .filter((b) => b.brewery)
-      .map((b) => b.brewery);
-
-  const uniqueBreweries = [...new Map(breweries.map(item => [item.brewery_name, item])).values()];
-
-  return uniqueBreweries
-      .map((brewery) => {
+  return userStore.breweries
+      .sort((a, b) => a.count < b.count ? 1 : -1)
+      .map((b) => {
         return {
-          ...brewery,
-          id: brewery.brewery_id
+          ...b,
+          id: b.brewery_id
         }
       })
       .slice(0, 6);
