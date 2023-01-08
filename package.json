@@ -10,6 +10,8 @@
     "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "@sentry/tracing": "^7.29.0",
+    "@sentry/vue": "^7.29.0",
     "axios": "^1.2.2",
     "pinia": "^2.0.28",
     "v-lazy-image": "^2.1.1",

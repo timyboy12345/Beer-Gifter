@@ -2,16 +2,16 @@ import { defineStore } from 'pinia'
 
 export const useCredentialsStore = defineStore('credentials',  {
     state: () => ({
-        token: sessionStorage.getItem('token')
+        token: localStorage.getItem('token')
     }),
     actions: {
         setToken(token: string) {
-            sessionStorage.setItem('token', token);
+            localStorage.setItem('token', token);
             // @ts-ignore
             this.token = token;
         },
         logout() {
-            sessionStorage.removeItem('token');
+            localStorage.removeItem('token');
             this.token = null;
         }
     },
