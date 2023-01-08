@@ -3,6 +3,7 @@ import {inject, ref} from 'vue';
 import {useUserStore} from "@/stores/user";
 import {useCredentialsStore} from "@/stores/credentials";
 import router from "@/router";
+import Alert from '@/components/Alert.vue';
 
 const userStore = useUserStore();
 const credentialsStore = useCredentialsStore();
@@ -11,11 +12,13 @@ const nameInput = ref(null);
 const getUntappdUser: any = inject('getUntappdUserInfo');
 
 let loading = ref(false);
+const error = ref(null);
 
 function submit() {
   loading.value = true;
+  error.value = null;
 
-  const user = getUntappdUser(nameInput.value)
+  getUntappdUser(nameInput.value)
       .then((user: any) => {
         userStore.setUser(user);
         // @ts-ignore
@@ -26,7 +29,11 @@ function submit() {
       })
       // @ts-ignore
       .catch((err) => {
-        console.error(err);
+        if (err.meta && err.meta.code === 404 && err.meta.error_detail) {
+          error.value = err.meta.error_detail;
+        } else {
+          throw err;
+        }
       })
       .then(() => {
         loading.value = false;
@@ -44,23 +51,33 @@ function submit() {
       Log in met Untappd
     </RouterLink>
 
-    <div class="mt-8" v-if="userStore.isLoggedIn">
-      Currently viewing info of {{ userStore.userName }}
-
-      <RouterLink :to="{name: 'untappd-dashboard'}" class="block underline text-yellow-600">
+    <Alert
+        v-if="userStore.isLoggedIn"
+        class="my-8"
+        header="Er zijn al gegevens opgehaald"
+    >
+      <span class="text-gray-600 text-sm">
+        Je kan maar van een 5 mensen per uur gegevens ophalen. Je hebt de gegevens van {{ userStore.userName }} al opgehaald.
+      </span>
+      <RouterLink :to="{name: 'untappd-dashboard'}" class="block underline text-yellow-600 text-sm">
         Bekijk alle gegevens van {{ userStore.userName }}
       </RouterLink>
-    </div>
+    </Alert>
 
     <div class="mt-8 flex flex-col" v-if="credentialsStore.isLoggedIn">
       <label for="name">Search by username</label>
       <input id="name"
+             autofocus
              v-model="nameInput"
              :disabled="loading"
              :class="{'opacity-50': loading}"
              class="focus:ring-2 ring-yellow-500 outline-none border-yellow-800 border-opacity-10 border-2 rounded py-2 px-4"
              @keyup.enter="submit"
       >
+
+      <div class="text-red-800 text-italic text-sm mt-2" v-if="error">
+        {{ error }}
+      </div>
     </div>
   </div>
 </template>

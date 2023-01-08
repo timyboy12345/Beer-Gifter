@@ -5,7 +5,7 @@ const userStore = useUserStore();
 const appVersion = userStore.version;
 
 function showMenuLinks() {
-  return userStore.isLoggedIn && userStore.checkins.length !== 0;
+  return userStore.importing === false && userStore.isLoggedIn && userStore.checkins.length !== 0;
 }
 </script>
 
@@ -13,7 +13,7 @@ function showMenuLinks() {
   <header class="w-full bg-yellow-600 flex flex-col lg:flex-row lg:items-center p-4 text-yellow-900 mb-4">
     <RouterLink to="/" class="font-bold mr-8">
       Beer Gifter
-      <span class="text-sm font-light opacity-50">{{ appVersion }}</span>
+      <span class="text-sm font-light opacity-50">v{{ appVersion }}</span>
     </RouterLink>
 
     <div class="wrapper text-sm lg:text-md lg:md-0">

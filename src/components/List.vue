@@ -4,13 +4,13 @@
       {{ header }}
     </h2>
 
-    <div class="flex flex-col divide-y divide-gray-100 border border-gray-100">
+    <div class="rounded flex flex-col divide-y divide-gray-100 border border-gray-100">
       <component
           :is="componentName"
           v-for="item of items"
           :class="{'hover:bg-gray-100': hasLink}"
           :href="dynamicLink(item)"
-          class="bg-white py-2 px-4 flex flex-row"
+          class="rounded bg-white py-2 px-4 flex flex-row"
           target="_blank"
       >
         <slot name="row" :item="item">

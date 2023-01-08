@@ -23,7 +23,7 @@ export default {
                         resolve(response.data.response.user);
                     })
                     .catch((err) => {
-                        reject(err);
+                        reject(err.response.data);
                     })
             });
         }

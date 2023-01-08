@@ -25,7 +25,7 @@ import * as Sentry from "@sentry/vue";
 import { BrowserTracing } from "@sentry/tracing";
 
 // @ts-ignore
-if (process.env.ENVIRONMENT === 'production') {
+if (typeof process === 'object' && process.env.ENVIRONMENT === 'production') {
     Sentry.init({
         app,
         dsn: "https://993f8dfc7abe4851b257b94d7dd468aa@o324258.ingest.sentry.io/4504469531197440",

@@ -3,42 +3,66 @@
     <h1 class="text-3xl font-bold text-yellow-900">Alle Biertjes</h1>
     <h2 class="text-sm text-gray-600">{{ userStore.beers.length }} biertjes</h2>
 
-    <div class="flex flex-row break-keep whitespace-nowrap overflow-scroll gap-2 my-4">
-      <div class="bg-yellow-600 rounded text-white py-1 px-2" v-for="beer of favoriteBeers()">
-        {{ beer.name }}: {{ beer.count }}
-      </div>
-    </div>
+    <Filters
+        class="my-4"
+        :items="breweries()"
+        @select="handleSelect"
+        :active-filter-id="activeFilterId"
+        header="Favoriete Brouwerijen"
+    >
+      <template v-slot:filter="{ item }">
+        {{ item.brewery_name }}
+      </template>
+    </Filters>
 
-    <BeerList :beers="userStore.beers" class="mt-4 mb-8"></BeerList>
+    <BeerList :beers="beers()" class="mt-4 mb-8"></BeerList>
   </div>
 </template>
 
 <script setup>
+import {ref} from 'vue';
 import {useUserStore} from "@/stores/user";
 import BeerList from "@/components/BeerList.vue";
+import Filters from "@/components/Filters.vue";
 
 const userStore = useUserStore();
+const activeFilterId = ref(null);
 
 function favoriteBeers() {
-  const beers = [];
-
-  userStore.checkins.forEach((checkin) => {
-    const foundBeer = beers.find((l) => l.id === checkin.beer.bid);
-
-    if (!foundBeer) {
-      beers.push({
-        id: checkin.beer.bid,
-        name: checkin.beer.beer_name,
-        count: 1
-      })
-    } else {
-      foundBeer.count += 1;
-    }
-  })
-
-  return beers
+  return userStore.beers
       .filter((l) => l.name !== '' && l.id !== '')
-      .sort((a, b) => a.count < b.count)
+      .sort((a, b) => a.count < b.count ? 1 : -1)
       .slice(0, 6);
+}
+
+function beers() {
+  return activeFilterId.value
+      ? userStore.beers.filter((b) => b.brewery && b.brewery.brewery_id === activeFilterId.value).sort((a, b) => a.count < b.count ? 1 : -1)
+      : userStore.beers.sort((a, b) => a.count < b.count ? 1 : -1);
+}
+
+function breweries() {
+  const breweries = userStore.beers
+      .filter((b) => b.brewery)
+      .map((b) => b.brewery);
+
+  const uniqueBreweries = [...new Map(breweries.map(item => [item.brewery_name, item])).values()];
+
+  return uniqueBreweries
+      .map((brewery) => {
+        return {
+          ...brewery,
+          id: brewery.brewery_id
+        }
+      })
+      .slice(0, 6);
+}
+
+function handleSelect(i) {
+  if (i === activeFilterId.value) {
+    activeFilterId.value = null;
+  } else {
+    activeFilterId.value = i;
+  }
 }
 </script>

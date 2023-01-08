@@ -13,7 +13,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'home',
       component: HomeView
     },
@@ -56,6 +56,11 @@ const router = createRouter({
       path: '/oauth/callback',
       name: 'oauth-callback',
       component: () => import('@/views/OAuth/Callback.vue')
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      redirect: '/home',
     }
   ]
 })
