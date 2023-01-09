@@ -6,7 +6,7 @@
     </RouterLink>
 
     <div class="wrapper text-sm lg:text-md lg:md-0 text-yellow-700">
-      <nav class="flex flex-row gap-x-4" v-if="showMenuLinks">
+      <nav class="flex flex-row gap-x-4 break-keep whitespace-nowrap overflow-scroll" v-if="showMenuLinks">
         <!--        <RouterLink class="block" v-if="!userStore.isLoggedIn" to="/">Home</RouterLink>-->
         <RouterLink active-class="text-yellow-900" class="hover:text-yellow-800 transition duration:100 block"
                     to="/untappd/dashboard">Algemene informatie

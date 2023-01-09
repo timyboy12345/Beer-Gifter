@@ -1,6 +1,10 @@
 <template>
   <div>
+    <h1 class="text-2xl font-bold text-yellow-800">Beer Matcher</h1>
+    <p class="text-gray-800 text-sm mt-2">Zoek op deze pagina naar een biertje wat je ergens ziet staan en kijk of het matcht met wat {{ userStore.userName }} normaal drinkt.</p>
+
     <FormInput
+        class="mt-8"
         :value="i"
         label="Zoek op biernaam"
         @input.self="(e) => i = e"
@@ -33,19 +37,27 @@ import BeerList from "../../../components/BeerList.vue";
 import Alert from "../../../components/Alert.vue";
 import {inject} from "vue";
 import router from "../../../router";
+import {useUserStore} from "../../../stores/user";
 
 export default {
   components: {Alert, BeerList, FormInput},
-  setup() {
-    const searchUntappdBeer = inject('searchUntappdBeer');
-
-    return {searchUntappdBeer};
-  },
   data() {
     return {
       i: '',
       searching: false,
       foundBeers: null
+    }
+  },
+  setup() {
+    const searchUntappdBeer = inject('searchUntappdBeer');
+    const userStore = useUserStore();
+
+    return {searchUntappdBeer, userStore};
+  },
+  created() {
+    if (sessionStorage.getItem('beer_search_results')) {
+      this.i = sessionStorage.getItem('beer_search_query');
+      this.foundBeers = JSON.parse(sessionStorage.getItem('beer_search_results'));
     }
   },
   methods: {
@@ -54,6 +66,8 @@ export default {
       this.searchUntappdBeer(this.i)
           .then((data) => {
             this.foundBeers = data.beers.items.map((b) => b.beer);
+            sessionStorage.setItem('beer_search_query', this.i);
+            sessionStorage.setItem('beer_search_results', JSON.stringify(this.foundBeers));
           })
           .catch((err) => {
             throw err;

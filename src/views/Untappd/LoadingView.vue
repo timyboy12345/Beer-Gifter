@@ -24,7 +24,8 @@ export default {
     return {
       // TODO: Remove this counter mechanism
       fetches: 0,
-      maxTries: (typeof process === 'object' && process.env.ENVIRONMENT === 'production') ? 4 : 1
+      maxTries: 4
+      // maxTries: (typeof process === 'object' && process.env.ENVIRONMENT === 'production') ? 4 : 1
     }
   },
   components: {Spinner},

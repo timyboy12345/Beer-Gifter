@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="text-2xl font-bold text-yellow-800">Beer Gifter</h1>
-    <p class="text-gray-800">Don't know what to buy for your beer-loving friends? We know the struggle! Don't worry,
+    <p class="text-gray-800 text-sm mt-2">Don't know what to buy for your beer-loving friends? We know the struggle! Don't worry,
       with this tool, you can just enter their Untappd profile-name, and off you go finding the perfect beer to buy.</p>
 
     <RouterLink v-if="!credentialsStore.isLoggedIn" to="/oauth/redirect"
