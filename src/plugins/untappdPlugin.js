@@ -28,7 +28,20 @@ export default {
             });
         }
 
+        const searchUntappdBeer = (query) => {
+            return new Promise((resolve, reject) => {
+                app.axios.get(`https://api.untappd.com/v4/search/beer/?limit=50&q=${query}&access_token=${credentialsStore.token}`)
+                    .then((response) => {
+                        resolve(response.data.response);
+                    })
+                    .catch((err) => {
+                        reject(err.response.data);
+                    })
+            });
+        }
+
         app.provide('getUntappdUserCheckins', getUntappdUserCheckins);
         app.provide('getUntappdUserInfo', getUntappdUserInfo);
+        app.provide('searchUntappdBeer', searchUntappdBeer);
     }
 }

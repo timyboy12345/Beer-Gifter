@@ -20,6 +20,9 @@
         <RouterLink active-class="text-yellow-900" class="hover:text-yellow-800 transition duration:100 block"
                     to="/untappd/checkins">Checkins
         </RouterLink>
+        <RouterLink active-class="text-yellow-900" class="hover:text-yellow-800 transition duration:100 block"
+                    to="/untappd/beer-matcher">Beer Matcher
+        </RouterLink>
       </nav>
     </div>
   </header>

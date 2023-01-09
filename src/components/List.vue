@@ -1,9 +1,14 @@
 <template>
   <div>
     <div v-if="header || headerLink" class="flex flex-row items-center justify-between mb-1">
-      <h2 class="text-lg text-yellow-800">
+      <div v-if="header || subheader">
+        <h2 class="text-lg text-yellow-800" v-if="header">
           {{ header }}
-      </h2>
+        </h2>
+        <div class="text-sm text-gray-600" v-if="subheader">
+          {{ subheader }}
+        </div>
+      </div>
 
       <RouterLink v-if="headerLink" :to="{name: headerLink}" class="w-6 h-6">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 stroke-yellow-600 hover:stroke-yellow-700 transition duration:100">
@@ -16,10 +21,11 @@
       <component
           :is="componentName"
           v-for="item of items"
-          :class="{'hover:bg-gray-100': hasLink}"
+          :class="{'hover:bg-gray-100 cursor-pointer': hasLink || isInteractive}"
           :href="dynamicLink(item)"
           class="rounded bg-white py-2 px-4 flex flex-row"
           target="_blank"
+          @click="$emit('select', item)"
       >
         <slot name="row" :item="item">
           <div class="rounded w-10 h-10 overflow-hidden mr-4">
@@ -64,7 +70,7 @@ export default {
       return this.hasLink ? 'a' : 'div';
     },
     hasLink() {
-      return this.link !== null;
+      return (typeof this.link === 'function' && this.link(this.items[0]) !== null) || typeof this.link === 'string';
     }
   },
   methods: {

@@ -6,7 +6,9 @@
       </h2>
     </slot>
 
-    <slot></slot>
+    <slot>
+      <div class="text-gray-600 text-sm">{{ content }}</div>
+    </slot>
   </div>
 </template>
 
@@ -15,6 +17,11 @@ export default {
   name: 'Alert',
   props: {
     header: {
+      type: String,
+      required: false,
+      default: null
+    },
+    content: {
       type: String,
       required: false,
       default: null

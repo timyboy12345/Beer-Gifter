@@ -17,26 +17,27 @@
       <span class="text-gray-600 text-sm">
         Je kan maar van een 5 mensen per uur gegevens ophalen. Je hebt de gegevens van {{ userStore.userName }} al opgehaald.
       </span>
-      <RouterLink :to="{name: 'untappd-dashboard'}" class="block underline text-yellow-600 text-sm">
+      <RouterLink :to="{name: 'untappd-dashboard'}" class="block underline text-yellow-600 transition duration:100 hover:text-yellow-700 text-sm">
         Bekijk alle gegevens van {{ userStore.userName }}
       </RouterLink>
+
+      <div class="text-red-800 mt-4 text-sm cursor-pointer hover:underline hover:text-red-900 transition duration:100"
+           @click="resetAll">
+        Of verwijder alle lokale gegevens.
+      </div>
     </Alert>
 
-    <div class="mt-8 flex flex-col" v-if="credentialsStore.isLoggedIn">
-      <label for="name">Search by username</label>
-      <input id="name"
-             autofocus
-             v-model="nameInput"
-             :disabled="loading"
-             :class="{'opacity-50': loading}"
-             class="focus:ring-2 ring-yellow-500 outline-none border-yellow-800 border-opacity-10 border-2 rounded py-2 px-4"
-             @keyup.enter="submit"
-      >
-
-      <div class="text-red-800 text-italic text-sm mt-2" v-if="error">
-        {{ error }}
-      </div>
-    </div>
+    <FormInput
+        :value="nameInput"
+        v-if="credentialsStore.isLoggedIn"
+        class="my-8"
+        label="Search by username"
+        :disabled="loading"
+        :error="error"
+        @submit="submit"
+        @input.self="handleInput"
+        @keyup.enter="submit()"
+    />
   </div>
 </template>
 
@@ -46,6 +47,7 @@ import {useUserStore} from "@/stores/user";
 import {useCredentialsStore} from "@/stores/credentials";
 import router from "@/router";
 import Alert from '@/components/Alert.vue';
+import FormInput from '@/components/FormInput.vue';
 
 export default {
   data() {
@@ -55,7 +57,7 @@ export default {
       error: null
     }
   },
-  components: {Alert},
+  components: {Alert, FormInput},
   setup() {
     const userStore = useUserStore();
     const credentialsStore = useCredentialsStore();
@@ -70,9 +72,9 @@ export default {
 
       this.getUntappdUser(this.nameInput)
           .then((user) => {
+            this.userStore.resetCheckins();
             this.userStore.setUser(user);
             this.userStore.setUserName(this.nameInput);
-            this.userStore.resetCheckins();
 
             router.push({name: "untappd-loading"});
           })
@@ -86,6 +88,12 @@ export default {
           .then(() => {
             this.loading = false;
           })
+    },
+    resetAll() {
+      this.userStore.resetAll();
+    },
+    handleInput(e) {
+      this.nameInput = e;
     }
   }
 }

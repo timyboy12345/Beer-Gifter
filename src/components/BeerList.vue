@@ -1,5 +1,12 @@
 <template>
-  <List :header="header" :items="beers" :link="getLink" :headerLink="headerLink">
+  <List
+      :header="header"
+      :subheader="subheader"
+      :headerLink="headerLink"
+      :is-interactive="isInteractive"
+      :items="beers"
+      :link="getLink"
+  >
     <template v-slot:img="{ item }">
       <v-lazy-image alt="Logo of beer" :src="item.beer_label" class="w-full h-full object-cover object-center" />
     </template>
@@ -21,10 +28,19 @@ export default {
     beers: {
       type: Array,
       required: true
-    }
+    },
+    shouldHotlink: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
   },
   methods: {
     getLink(item) {
+      if (!this.shouldHotlink) {
+        return null;
+      }
+
       return `https://untappd.com/b/${item.beer_slug}/${item.bid}`;
     }
   }
