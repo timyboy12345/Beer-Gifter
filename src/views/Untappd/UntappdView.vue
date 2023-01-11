@@ -50,12 +50,16 @@ export default {
   },
   computed: {
     favoriteBeers() {
-      return this.userStore.beers
+      const b = [...this.userStore.beers];
+
+      return b
           .sort((a, b) => a.score < b.score ? 1 : -1)
           .slice(0, 5)
     },
     mostDrankBeers() {
-      return this.userStore.beers
+      const b = [...this.userStore.beers];
+
+      return b
           .sort((a, b) => a.count < b.count ? 1 : -1)
           .slice(0, 5)
     },

@@ -39,7 +39,7 @@ export default {
     beers() {
       return this.activeFilterId
           ? this.userStore.beers.filter((b) => b.brewery && b.brewery.brewery_id === this.activeFilterId)
-          : this.userStore.beers;
+          : this.userStore.beers.slice(0, 50);
     },
     breweries() {
       return this.userStore.breweries

@@ -96,8 +96,7 @@ export default {
   data() {
     return {
       bid: null,
-      beer: null,
-      cachingKey: `${this.userStore.userName}_${this.bid}`
+      beer: null
     }
   },
   setup() {
@@ -121,7 +120,7 @@ export default {
         }
     )
 
-    if (localStorage.getItem(this.cachingKey)) {
+    if (this.bid && localStorage.getItem(this.cachingKey)) {
       this.beer = JSON.parse(localStorage.getItem(this.cachingKey));
     } else {
       this.getBeer();
@@ -171,6 +170,9 @@ export default {
       }
 
       return texts.join(' ');
+    },
+    cachingKey() {
+      return `${this.userStore.userName}_${this.bid}`;
     }
   },
   methods: {

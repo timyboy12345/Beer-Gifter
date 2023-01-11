@@ -75,42 +75,69 @@ export const useUserStore = defineStore('user', {
         },
         recalculate() {
             return new Promise(resolve => {
-                // @ts-ignore
-                this.beers = [...new Map(this.checkins.map(item => [item.beer.bid, {
+                const beersWithBrewery = this.checkins
+                    .map((checkin) => {
+                        return {
+                            // @ts-ignore
+                            ...checkin.beer,
+                            // @ts-ignore
+                            brewery: checkin.brewery
+                        }
+                    });
+
+                const beers = {};
+                for (const b of beersWithBrewery) {
                     // @ts-ignore
-                    ...item.beer,
+                    if (!(b.bid in beers)) {
+                        const firstCheckin = this.checkins.filter((ci: any) => ci.beer.bid === b.bid);
+                        // @ts-ignore
+                        const score = firstCheckin.length > 0 ? firstCheckin[0].rating_score : null;
+
+                        // @ts-ignore
+                        beers[b.bid] ={
+                            ...b,
+                            // @ts-ignore
+                            count: this.checkins.filter((ci: any) => ci.beer.bid === b.bid).length,
+                            // @ts-ignore
+                            score: score
+                        };
+                    }
+                }
+
+                // @ts-ignore
+                this.beers = Object.values(beers);
+
+                const venues = {};
+                for (const checkin of this.checkins) {
                     // @ts-ignore
-                    brewery: item.brewery
-                }])).values()];
+                    if (!(checkin.venue.venue_id in venues) && checkin.venue.location) {
+                        // @ts-ignore
+                        venues[checkin.venue.venue_id] ={
+                            // @ts-ignore
+                            ...checkin.venue,
+                            // @ts-ignore
+                            count: this.checkins.filter((ci: any) => ci.venue.venue_id === checkin.venue.venue_id).length
+                        }
+                    }
+                }
 
                 // @ts-ignore
-                this.venues = [...new Map(this.checkins.map(item => [item.venue.venue_id, item.venue])).values()]
-                    // Filter out checkins without venue
-                    .filter((v) => !Array.isArray(v));
+                this.venues = Object.values(venues);
+
+                const breweries = {};
+                // @ts-ignore
+                for (const beer of beersWithBrewery) {
+                    if (!(beer.brewery.brewery_id in breweries)) {
+                        // @ts-ignore
+                        breweries[beer.brewery.brewery_id] = {
+                            ...beer.brewery,
+                            count: beersWithBrewery.filter((bwb: any) => bwb.brewery.brewery_id === beer.brewery.brewery_id).length
+                        }
+                    }
+                }
 
                 // @ts-ignore
-                const breweries = this.beers
-                    .filter((b: any) => b.brewery)
-                    .map((b: any) => b.brewery);
-
-                // @ts-ignore
-                this.breweries = [...new Map(breweries.map(item => [item.brewery_name, item])).values()];
-
-                this.beers.map((beer: any) => {
-                    beer.count = this.checkins.filter((ci: any) => ci.beer.bid === beer.bid).length;
-
-                    const firstCheckin = this.checkins.filter((ci: any) => ci.beer.bid === beer.bid);
-                    // @ts-ignore
-                    beer.score = firstCheckin.length > 0 ? firstCheckin[0].rating_score : null;
-                })
-
-                this.venues.map((venue: any) => {
-                    venue.count = this.checkins.filter((ci: any) => ci.venue.venue_id === venue.venue_id).length;
-                })
-
-                this.breweries.map((brewery: any) => {
-                    brewery.count = this.checkins.filter((ci: any) => ci.brewery.brewery_id === brewery.brewery_id).length;
-                })
+                this.breweries = Object.values(breweries);
 
                 resolve(true);
             });

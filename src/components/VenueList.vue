@@ -1,5 +1,5 @@
 <template>
-  <List :header="header" :items="venues" :link="getLink" :headerLink="headerLink">
+  <List :header="header" :subheader="subheader" :items="venues" :link="getLink" :headerLink="headerLink">
     <template v-slot:img="{ item }">
       <v-lazy-image alt="Logo of beer" :src="item.venue_icon.lg" class="w-full h-full object-cover object-center" />
     </template>

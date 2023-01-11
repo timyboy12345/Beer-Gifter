@@ -66,7 +66,7 @@ export default {
             return {
               ...l,
               id: l.venue_city,
-              count: this.userStore.venues.filter((v) => v.location.venue_city === l.venue_city).length
+              count: this.userStore.venues.filter((v) => v.location && v.location.venue_city === l.venue_city).length
             }
           })
           .sort((a, b) => a.count < b.count ? 1 : -1)
