@@ -98,6 +98,10 @@ export const useUserStore = defineStore('user', {
 
                 this.beers.map((beer: any) => {
                     beer.count = this.checkins.filter((ci: any) => ci.beer.bid === beer.bid).length;
+
+                    const firstCheckin = this.checkins.filter((ci: any) => ci.beer.bid === beer.bid);
+                    // @ts-ignore
+                    beer.score = firstCheckin.length > 0 ? firstCheckin[0].rating_score : null;
                 })
 
                 this.venues.map((venue: any) => {

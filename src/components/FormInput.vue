@@ -1,15 +1,17 @@
 <template>
   <div class="flex flex-col">
-    <label for="name">{{ label }}</label>
+    <label for="name" class="text-gray-600 text-sm">{{ label }}</label>
     <input
         id="name"
         :class="{'opacity-50': disabled}"
         :disabled="disabled"
         v-model="internalValue"
         autofocus
-        class="focus:ring-2 ring-yellow-500 outline-none border-yellow-800 border-opacity-10 border-2 rounded py-2 px-4"
+        class="focus:ring-2 ring-yellow-500 outline-none border-yellow-800 border-opacity-10 border-2 rounded py-2 px-3"
         ref="input"
+        :placeholder="placeholder"
     >
+    <div class="text-gray-400 text-xs" v-if="subheader">{{ subheader }}</div>
 
     <div class="text-red-800 text-italic text-sm mt-2" v-if="error">
       {{ error }}
@@ -38,6 +40,15 @@ export default {
     label: {
       type: String,
       required: true
+    },
+    placeholder: {
+      type: String,
+      required: true
+    },
+    subheader: {
+      type: String,
+      required: false,
+      default: null
     },
     disabled: {
       type: Boolean,

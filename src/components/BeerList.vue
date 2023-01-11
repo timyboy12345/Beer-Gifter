@@ -8,11 +8,13 @@
       :link="getLink"
   >
     <template v-slot:img="{ item }">
-      <v-lazy-image alt="Logo of beer" :src="item.beer_label" class="w-full h-full object-cover object-center" />
+      <v-lazy-image alt="Logo of beer" :src="item.beer_label" class="w-full h-full object-cover object-center"/>
     </template>
     <template v-slot:title="{ item }">{{ item.beer_name }}</template>
     <template v-slot:subtitle="{ item }">{{ item.beer_style }}</template>
-    <template v-slot:undertitle="{ item }">ABV: {{ item.beer_abv }}</template>
+    <template v-slot:undertitle="{ item }">ABV: {{ item.beer_abv }} <span v-if="item.score">/ Score: <span
+        class="text-yellow-800">{{ item.score }}</span></span> <span v-if="item.count">/ <span>{{ item.count }}x gedronken</span></span>
+    </template>
   </List>
 </template>
 

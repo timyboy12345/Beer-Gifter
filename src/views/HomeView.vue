@@ -1,8 +1,10 @@
 <template>
   <div>
     <h1 class="text-2xl font-bold text-yellow-800">Beer Gifter</h1>
-    <p class="text-gray-800 text-sm mt-2">Don't know what to buy for your beer-loving friends? We know the struggle! Don't worry,
-      with this tool, you can just enter their Untappd profile-name, and off you go finding the perfect beer to buy.</p>
+    <p class="text-gray-800 text-sm mt-2">Weet je niet wat je moet kopen voor je bier-drinkende vriend? We kennen het
+      probleem! Maar vrees niet, we hebben deze tool ontworpen voor precies dit doel. Voer een untappd-username in en
+      zie welk biertjes deze persoon graag (en niet graag) drinkt. Zo is het net alsof je verstand hebt van bier en
+      precies weet wat je moet kopen.</p>
 
     <RouterLink v-if="!credentialsStore.isLoggedIn" to="/oauth/redirect"
                 class="block mt-8 bg-yellow-800 text-white py-2 px-4 rounded">
@@ -15,9 +17,10 @@
         header="Er zijn al gegevens opgehaald"
     >
       <span class="text-gray-600 text-sm">
-        Je kan maar van een 5 mensen per uur gegevens ophalen. Je hebt de gegevens van {{ userStore.userName }} al opgehaald.
+        Je kan maar van een paar mensen per uur gegevens ophalen. Je hebt de gegevens van {{ userStore.userName }} al opgehaald.
       </span>
-      <RouterLink :to="{name: 'untappd-dashboard'}" class="block underline text-yellow-600 transition duration:100 hover:text-yellow-700 text-sm">
+      <RouterLink :to="{name: 'untappd-dashboard'}"
+                  class="block underline text-yellow-600 transition duration:100 hover:text-yellow-700 text-sm">
         Bekijk alle gegevens van {{ userStore.userName }}
       </RouterLink>
 
@@ -31,7 +34,8 @@
         :value="nameInput"
         v-if="credentialsStore.isLoggedIn"
         class="my-8"
-        label="Search by username"
+        label="Zoek op gebruikersnaam"
+        placeholder="Gebruikersnaam"
         :disabled="loading"
         :error="error"
         @submit="submit"

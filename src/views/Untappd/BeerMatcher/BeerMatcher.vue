@@ -7,6 +7,7 @@
         class="mt-8"
         :value="i"
         label="Zoek op biernaam"
+        placeholder="Naam van biertje"
         @input.self="(e) => i = e"
         @keyup.enter="search()"
         :disabled="searching"
@@ -55,9 +56,21 @@ export default {
     return {searchUntappdBeer, userStore};
   },
   created() {
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+      get: (searchParams, prop) => searchParams.get(prop),
+    });
+
+    if (params.search) {
+      this.i = params.search;
+      this.search();
+      return;
+    }
+
     if (sessionStorage.getItem('beer_search_results')) {
       this.i = sessionStorage.getItem('beer_search_query');
       this.foundBeers = JSON.parse(sessionStorage.getItem('beer_search_results'));
+
+      return;
     }
   },
   methods: {
