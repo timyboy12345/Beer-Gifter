@@ -1,7 +1,11 @@
 <template>
   <div>
-    <h1 class="text-2xl font-bold text-yellow-800">Beer Matcher</h1>
-    <p class="text-gray-800 text-sm mt-2">Zoek op deze pagina naar een biertje wat je ergens ziet staan en kijk of het matcht met wat {{ userStore.userName }} normaal drinkt.</p>
+    <h1 class="text-2xl font-bold text-primary-800">Beer Matcher</h1>
+    <p class="text-gray-800 text-sm mt-2">
+      Zoek op deze pagina naar een biertje wat je ergens ziet staan en kijk of het matcht met wat {{
+        userStore.userName
+      }} normaal drinkt.
+    </p>
 
     <FormInput
         class="mt-8"
@@ -34,11 +38,11 @@
 </template>
 <script>
 import FormInput from "../../../components/FormInput.vue";
-import BeerList from "../../../components/BeerList.vue";
+import BeerList from "../../../components/lists/BeerList.vue";
 import Alert from "../../../components/Alert.vue";
 import {inject} from "vue";
-import router from "../../../router";
 import {useUserStore} from "../../../stores/user";
+import {useModalStore} from "../../../stores/modal";
 
 export default {
   components: {Alert, BeerList, FormInput},
@@ -52,8 +56,9 @@ export default {
   setup() {
     const searchUntappdBeer = inject('searchUntappdBeer');
     const userStore = useUserStore();
+    const modalStore = useModalStore();
 
-    return {searchUntappdBeer, userStore};
+    return {searchUntappdBeer, userStore, modalStore};
   },
   created() {
     const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -90,7 +95,8 @@ export default {
           });
     },
     handleSelect(beer) {
-      router.push({name: 'untappd-beermatcher-show', params: {id: beer.bid}});
+      // router.push({name: 'untappd-beermatcher-show', params: {id: beer.bid}});
+      this.modalStore.addBeer(beer.bid);
     }
   }
 }

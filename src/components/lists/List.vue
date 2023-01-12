@@ -2,7 +2,7 @@
   <div>
     <div v-if="header || headerLink" class="flex flex-row items-center justify-between mb-1">
       <div v-if="header || subheader">
-        <h2 class="text-lg text-yellow-800" v-if="header">
+        <h2 class="text-lg text-primary-800" v-if="header">
           {{ header }}
         </h2>
         <div class="text-sm text-gray-600" v-if="subheader">
@@ -11,7 +11,7 @@
       </div>
 
       <RouterLink v-if="headerLink" :to="{name: headerLink}" class="w-6 h-6">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 stroke-yellow-600 hover:stroke-yellow-700 transition duration:100">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 stroke-primary-600 hover:stroke-primary-700 transition duration:100">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       </RouterLink>
@@ -28,18 +28,18 @@
           @click="$emit('select', item)"
       >
         <slot name="row" :item="item">
-          <div class="rounded w-10 h-10 overflow-hidden mr-4">
+          <div v-if="!compact" class="rounded w-10 h-10 overflow-hidden mr-4">
             <slot name="img" :item="item"></slot>
           </div>
 
           <div class="flex flex-col">
-            <div class="text-yellow-800">
+            <div class="text-primary-800" :class="{'text-sm': compact}">
               <slot name="title" :item="item"></slot>
             </div>
-            <div class="text-gray-500 text-xs">
+            <div class="text-gray-500 text-sm" :class="{'text-xs': compact}">
               <slot name="subtitle" :item="item"></slot>
             </div>
-            <div class="text-gray-500 text-xs">
+            <div class="text-gray-500 text-sm" :class="{'text-xs': compact}">
               <slot name="undertitle" :item="item"></slot>
             </div>
           </div>
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import ListMixin from "../mixins/ListMixin.js";
+import ListMixin from "../../mixins/ListMixin.js";
 
 export default {
   props: {

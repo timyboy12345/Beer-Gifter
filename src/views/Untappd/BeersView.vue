@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-3xl font-bold text-yellow-900">Alle Biertjes</h1>
+    <h1 class="text-3xl font-bold text-primary-900">Alle Biertjes</h1>
     <h2 class="text-sm text-gray-600">{{ userStore.beers.length }} biertjes</h2>
 
     <Filters
@@ -21,7 +21,7 @@
 
 <script>
 import {useUserStore} from "@/stores/user";
-import BeerList from "@/components/BeerList.vue";
+import BeerList from "@/components/lists/BeerList.vue";
 import Filters from "@/components/Filters.vue";
 
 export default {

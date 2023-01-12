@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1 class="text-3xl font-bold text-yellow-900">{{ userStore.fullName }}</h1>
+    <h1 class="text-3xl font-bold text-primary-900">{{ userStore.fullName }}</h1>
     <h2 class="text-sm text-gray-600">Untappd / <a :href="`https://untappd.com/user/${userStore.userName}`"
-                                                   class="underline text-yellow-600"
+                                                   class="underline text-primary-600"
                                                    target="_blank">{{ userStore.userName }}</a></h2>
 
     <FormInput
@@ -31,9 +31,9 @@
 
 <script>
 import {useUserStore} from "@/stores/user";
-import BeerList from "@/components/BeerList.vue";
-import VenueList from "@/components/VenueList.vue";
-import BreweryList from "@/components/BreweryList.vue";
+import BeerList from "@/components/lists/BeerList.vue";
+import VenueList from "@/components/lists/VenueList.vue";
+import BreweryList from "@/components/lists/BreweryList.vue";
 import FormInput from "../../components/FormInput.vue";
 import router from "../../router";
 

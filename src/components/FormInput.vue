@@ -7,7 +7,7 @@
         :disabled="disabled"
         v-model="internalValue"
         autofocus
-        class="focus:ring-2 ring-yellow-500 outline-none border-yellow-800 border-opacity-10 border-2 rounded py-2 px-3"
+        class="focus:ring-2 ring-primary-500 outline-none border-primary-800 border-opacity-10 border-2 rounded py-2 px-3"
         ref="input"
         :placeholder="placeholder"
     >

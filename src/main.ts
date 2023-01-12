@@ -21,11 +21,15 @@ app.provide('axios', app.config.globalProperties.axios) // provide 'axios'
 import untappdPlugin from './plugins/untappdPlugin.js';
 app.use(untappdPlugin);
 
+// @ts-ignore
+import beerPopup from './plugins/beerPopup.js';
+app.use(beerPopup);
+
 import * as Sentry from "@sentry/vue";
 import { BrowserTracing } from "@sentry/tracing";
 
 // @ts-ignore
-if (typeof process === 'object' && process.env.ENVIRONMENT === 'production') {
+// if (typeof process === 'object' && process.env.ENVIRONMENT === 'production') {
     Sentry.init({
         app,
         dsn: "https://993f8dfc7abe4851b257b94d7dd468aa@o324258.ingest.sentry.io/4504469531197440",
@@ -41,6 +45,6 @@ if (typeof process === 'object' && process.env.ENVIRONMENT === 'production') {
         tracesSampleRate: 1.0,
         logErrors: true
     });
-}
+// }
 
 app.mount('#app')

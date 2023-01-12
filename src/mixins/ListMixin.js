@@ -19,6 +19,11 @@ export default {
             type: Boolean,
             required: false,
             default: false
+        },
+        compact: {
+            type: Boolean,
+            required: false,
+            default: false
         }
     }
 }

@@ -18,7 +18,9 @@
       </div>
       <div class="border rounded bg-white p-2">
         <div class="text-xs text-gray-600">Gemiddelde Score</div>
-        <div class="text-2xl text-primary-600">{{ Math.round(beer.weighted_rating_score * 100) / 100 }}</div>
+        <div class="text-2xl text-primary-600">{{ Math.round(beer.weighted_rating_score * 100) / 100 }}
+          <span class="text-gray-400 text-sm">/ 5</span>
+        </div>
       </div>
       <div class="border rounded bg-white p-2">
         <div class="text-xs text-gray-500">Aantal drinkers</div>
@@ -43,6 +45,7 @@
         :important="true"
         header="Onze aanbeveling"
         :content="matchText"
+        unsafe-rendering
     ></Alert>
 
     <BeerList
@@ -69,7 +72,6 @@
         :beers="beer.similar.items.map((b) => b.beer)"
         is-interactive
         :should-hotlink="false"
-        @select="handleBeerSelect"
     ></BeerList>
   </div>
 
@@ -85,46 +87,23 @@
 </template>
 
 <script>
-import {inject} from "vue";
-import Spinner from "../../../components/Spinner.vue";
-import BeerList from "../../../components/lists/BeerList.vue";
-import {useUserStore} from "../../../stores/user";
-import Alert from "../../../components/Alert.vue";
+import Spinner from "../Spinner.vue";
+import BeerList from "../lists/BeerList.vue";
+import {useUserStore} from "@/stores/user";
+import Alert from "../Alert.vue";
 
 export default {
   components: {Alert, BeerList, Spinner},
-  data() {
-    return {
-      bid: null,
-      beer: null
+  props: {
+    beer: {
+      type: Object,
+      required: true
     }
   },
   setup() {
-    const getUntappdBeer = inject('getUntappdBeer');
     const userStore = useUserStore();
 
-    return {getUntappdBeer, userStore};
-  },
-  created() {
-    this.bid = this.$route.params.id;
-
-    this.$watch(
-        () => this.$route.params,
-        (toParams, previousParams) => {
-          if (toParams.id !== previousParams.id) {
-            this.beer = null;
-
-            this.bid = toParams.id;
-            this.getBeer();
-          }
-        }
-    )
-
-    if (this.bid && localStorage.getItem(this.cachingKey)) {
-      this.beer = JSON.parse(localStorage.getItem(this.cachingKey));
-    } else {
-      this.getBeer();
-    }
+    return {userStore};
   },
   computed: {
     sameTypeBeers() {
@@ -143,7 +122,23 @@ export default {
       return score * 20;
     },
     matchText() {
-      const texts = ['Ons oordeel:'];
+      const texts = [];
+
+      const double = this.userStore.beers.find((b) => b.bid === this.beer.bid)
+      if (double) {
+        texts.push(`<span class="italic">Let op: Dit biertje is al eens gedronken door ${this.userStore.userName}.`);
+
+        if (double.score) {
+          texts.push(`Het biertje kreeg toen een ${double.score} van de 5.`);
+        }
+
+        texts.push('Bierliefhebbers vinden het vaak leuk om nieuwe biertjes te ontdekken, maar een paar dubbele kan geen kwaad.');
+
+        texts.push('</span><br>');
+        texts.push('<br>');
+      }
+
+      texts.push('Ons oordeel:');
 
       if (this.match) {
         texts.push(`${this.userStore.userName} matcht voor ${this.match}% met dit biertje.`);
@@ -170,21 +165,6 @@ export default {
       }
 
       return texts.join(' ');
-    },
-    cachingKey() {
-      return `${this.userStore.userName}_${this.bid}`;
-    }
-  },
-  methods: {
-    getBeer() {
-      this.getUntappdBeer(this.bid)
-          .then((result) => {
-            this.beer = result;
-            localStorage.setItem(this.cachingKey, JSON.stringify(result));
-          })
-          .catch((err) => {
-            throw err;
-          })
     }
   }
 }

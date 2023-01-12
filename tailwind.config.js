@@ -1,3 +1,5 @@
+const DefaultColors = require('tailwindcss/colors.js');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -5,7 +7,11 @@ module.exports = {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'primary': DefaultColors.yellow
+      }
+    },
   },
   plugins: [],
 }

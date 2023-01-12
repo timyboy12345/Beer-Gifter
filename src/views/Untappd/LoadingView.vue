@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-3xl font-bold text-yellow-900">{{ userStore.fullName }}</h1>
+    <h1 class="text-3xl font-bold text-primary-900">{{ userStore.fullName }}</h1>
     <h2 class="text-sm text-gray-600">Alle data wordt opgehaald...</h2>
 
     <div class="mt-8 mb-4 text-gray-600 flex flex-row items-center">

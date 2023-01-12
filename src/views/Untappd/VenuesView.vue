@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-3xl font-bold text-yellow-900">Alle Locaties</h1>
+    <h1 class="text-3xl font-bold text-primary-900">Alle Locaties</h1>
     <h2 class="text-sm text-gray-600">{{ userStore.venues.length }} verschillende locaties</h2>
 
     <Filters
@@ -37,7 +37,7 @@
 <script>
 import {useUserStore} from "@/stores/user";
 import Filters from "@/components/Filters.vue";
-import VenueList from "@/components/VenueList.vue";
+import VenueList from "@/components/lists/VenueList.vue";
 import "leaflet/dist/leaflet.css";
 import {LMap, LMarker, LTileLayer} from "@vue-leaflet/vue-leaflet";
 
