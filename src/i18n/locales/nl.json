@@ -8,7 +8,8 @@
     "username": "Gebruikersnaam",
     "change_language": "Verander van taal",
     "cart": "Karretje",
-    "drank_x_times": "{count}x gedronken"
+    "drank_x_times": "{count}x gedronken",
+    "made_with_love": "Gemaakt met ❤️ door Tim"
   },
   "home": {
     "title": "Beer Gifter",
@@ -91,7 +92,9 @@
     "seo_title": "Karretje",
     "seo_description": "Verzamel alle biertjes die je wil kopen in je karretje, zodat je in de winkel een makkelijk overzicht hebt van de biertjes die je wil kopen.",
     "header": "Jouw Karretje",
-    "subheader": "Je hebt {count} biertjes verzameld"
+    "subheader": "Je hebt {count} biertjes verzameld",
+    "no_beers_added_header": "Geen biertjes gevonden",
+    "no_beers_added_content": "Er zijn nog geen biertjes toegevoegd aan je karretje. Voeg het eerste biertje toe door een biertje te selecteren en daarna op 'Voeg toe aan karretje' te klikken."
   },
   "loading_modal": {
     "information_being_retrieved": "Informatie wordt opgehaald"

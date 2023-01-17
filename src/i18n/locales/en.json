@@ -8,7 +8,8 @@
     "username": "Username",
     "change_language": "Change Language",
     "cart": "Cart",
-    "drank_x_times": "Drank {count}x times"
+    "drank_x_times": "Drank {count}x times",
+    "made_with_love": "Made with ❤️ by Tim"
   },
   "home": {
     "title": "Beer Gifter",
@@ -91,7 +92,9 @@
     "seo_title": "Cart",
     "seo_description": "Collect all beers you want to buy in this cart, so you can easily see what you want to buy once you are in the store.",
     "header": "All Beers in your Cart",
-    "subheader": "{count} items in cart"
+    "subheader": "{count} items in cart",
+    "no_beers_added_header": "No beers added to cart",
+    "no_beers_added_content": "You have not yet added any beers to your cart, add your first by selecting a beer and clicking 'Add to cart'"
   },
   "loading_modal": {
     "information_being_retrieved": "Informatie wordt opgehaald"

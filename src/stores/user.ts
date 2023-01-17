@@ -55,6 +55,7 @@ export const useUserStore = defineStore('user', {
             this.breweries = [];
             this.venues = [];
             this.beers = [];
+            this.cart = [];
             this.checkins = [];
             this.userName = null;
             this.user = null;

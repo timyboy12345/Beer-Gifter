@@ -97,6 +97,10 @@
           >
         </RouterLink>
       </div>
+
+      <div class="mt-2 mb-4 text-gray-600 text-sm">
+        {{ $t('generic.made_with_love') }} - <a href="https://arendz.nl" class="underline text-gray-800">Arendz.nl</a>
+      </div>
     </div>
   </div>
 </template>

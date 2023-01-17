@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="text-3xl font-bold text-primary-900">{{ $t('untappd_cart.header') }}</h1>
-    <h2 class="text-sm text-gray-600">{{ $t('untappd_cart.subheader', {count: userStore.beers.length}) }}</h2>
+    <h2 class="text-sm text-gray-600">{{ $t('untappd_cart.subheader', {count: userStore.cart.length}) }}</h2>
 
     <BeerList
         v-if="userStore.cart.length > 0"
@@ -11,9 +11,9 @@
 
     <Alert
         v-else
+        :content="$t('untappd_cart.no_beers_added_content')"
+        :header="$t('untappd_cart.no_beers_added_header')"
         class="mt-4 mb-8"
-        content="Er zijn nog geen biertjes toegevoegd aan je karretje"
-        header="Geen biertjes gevonden"
     ></Alert>
   </div>
 </template>
