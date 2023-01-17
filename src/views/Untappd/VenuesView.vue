@@ -1,14 +1,14 @@
 <template>
   <div>
-    <h1 class="text-3xl font-bold text-primary-900">Alle Locaties</h1>
-    <h2 class="text-sm text-gray-600">{{ userStore.venues.length }} verschillende locaties</h2>
+    <h1 class="text-3xl font-bold text-primary-900">{{ $t('untappd_venues.header') }}</h1>
+    <h2 class="text-sm text-gray-600">{{ $t('untappd_venues.subheader', {count: userStore.venues.length}) }}</h2>
 
     <Filters
         class="my-4"
         :items="favoriteCities"
         @select="handleSelect"
         :active-filter-id="activeFilterId"
-        header="Favoriete Steden"
+        :header="$t('untappd_venues.favorite_cities')"
     >
       <template v-slot:filter="{ item }">
         {{ item.venue_city }}
@@ -40,6 +40,8 @@ import Filters from "@/components/Filters.vue";
 import VenueList from "@/components/lists/VenueList.vue";
 import "leaflet/dist/leaflet.css";
 import {LMap, LMarker, LTileLayer} from "@vue-leaflet/vue-leaflet";
+import {useI18n} from "vue-i18n";
+import {useMeta} from "vue-meta";
 
 export default {
   data() {
@@ -51,6 +53,18 @@ export default {
   components: {Filters, VenueList, LMap, LTileLayer, LMarker},
   setup() {
     const userStore = useUserStore();
+
+    const {t} = useI18n()
+    useMeta({
+      title: t('untappd_venues.seo_title'),
+      description: t('untappd_venues.seo_description'),
+      og: {
+        title: t('untappd_venues.seo_title'),
+        description: t('untappd_venues.seo_description')
+      },
+      htmlAttrs: {lang: 'nl', amp: false}
+    })
+
     return {userStore}
   },
   computed: {

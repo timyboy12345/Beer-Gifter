@@ -1,6 +1,6 @@
 {
   "name": "beer-gifter",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "Log in with your beer-socials and see what beers you can gift your beer-drinking friends, matching their styles and likings.",
   "author": {
     "name": "Tim Arendsen",
@@ -22,6 +22,8 @@
     "v-lazy-image": "^2.1.1",
     "vue": "^3.2.45",
     "vue-axios": "^3.5.2",
+    "vue-i18n": "^9.2.2",
+    "vue-meta": "^3.0.0-alpha.10",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {

@@ -1,6 +1,14 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import {useUserStore} from "@/stores/user";
+import {useI18nStore} from "@/stores/i18n";
+
+function localeChanger(to: any) {
+    const i18nStore = useI18nStore();
+
+    if (to.name) {
+        i18nStore.setLocale('en');
+    }
+}
 
 function hasValidUntappdCredentials(to: any) {
     const userStore = useUserStore();
@@ -10,7 +18,7 @@ function hasValidUntappdCredentials(to: any) {
             userStore.restoreCachedResults();
             return to;
         } else {
-            return {name: 'home'}
+            return {name: 'nl_home'}
         }
     }
 }
@@ -30,57 +38,88 @@ function restoreData() {
     }
 }
 
+const routes = [
+    {
+        name: 'home',
+        path: 'home',
+        component: () => import('@/views/HomeView.vue'),
+        beforeEnter: [restoreData]
+    },
+    {
+        path: 'untappd/loading',
+        name: 'untappd-loading',
+        component: () => import('@/views/Untappd/LoadingView.vue'),
+        beforeEnter: [hasValidUntappdCredentials]
+    },
+    {
+        path: 'untappd/dashboard',
+        name: 'untappd-dashboard',
+        component: () => import('@/views/Untappd/UntappdView.vue'),
+        beforeEnter: [hasValidUntappdCredentials]
+    },
+    {
+        path: 'untappd/beers',
+        name: 'untappd-beers',
+        component: () => import('@/views/Untappd/BeersView.vue'),
+        beforeEnter: [hasValidUntappdCredentials]
+    },
+    {
+        path: 'untappd/venues',
+        name: 'untappd-venues',
+        component: () => import('@/views/Untappd/VenuesView.vue'),
+        beforeEnter: [hasValidUntappdCredentials]
+    },
+    {
+        path: 'untappd/checkins',
+        name: 'untappd-checkins',
+        component: () => import('@/views/Untappd/CheckinsView.vue'),
+        beforeEnter: [hasValidUntappdCredentials]
+    },
+    {
+        path: 'untappd/beer-matcher',
+        name: 'untappd-beermatcher-index',
+        component: () => import('@/views/Untappd/BeerMatcher/BeerMatcher.vue'),
+        beforeEnter: [hasValidUntappdCredentials]
+    },
+    {
+        path: 'untappd/beer-matcher/:id',
+        name: 'untappd-beermatcher-show',
+        component: () => import('@/views/Untappd/BeerMatcher/BeerMatcherResult.vue'),
+        beforeEnter: [hasValidUntappdCredentials]
+    }
+];
+
+
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
-        {
-            path: '/home',
-            name: 'home',
-            component: HomeView,
-            beforeEnter: [restoreData]
-        },
-        {
-            path: '/untappd/loading',
-            name: 'untappd-loading',
-            component: () => import('@/views/Untappd/LoadingView.vue'),
-            beforeEnter: [hasValidUntappdCredentials]
-        },
-        {
-            path: '/untappd/dashboard',
-            name: 'untappd-dashboard',
-            component: () => import('@/views/Untappd/UntappdView.vue'),
-            beforeEnter: [hasValidUntappdCredentials]
-        },
-        {
-            path: '/untappd/beers',
-            name: 'untappd-beers',
-            component: () => import('@/views/Untappd/BeersView.vue'),
-            beforeEnter: [hasValidUntappdCredentials]
-        },
-        {
-            path: '/untappd/venues',
-            name: 'untappd-venues',
-            component: () => import('@/views/Untappd/VenuesView.vue'),
-            beforeEnter: [hasValidUntappdCredentials]
-        },
-        {
-            path: '/untappd/checkins',
-            name: 'untappd-checkins',
-            component: () => import('@/views/Untappd/CheckinsView.vue'),
-            beforeEnter: [hasValidUntappdCredentials]
-        },
-        {
-            path: '/untappd/beer-matcher',
-            name: 'untappd-beermatcher-index',
-            component: () => import('@/views/Untappd/BeerMatcher/BeerMatcher.vue'),
-            beforeEnter: [hasValidUntappdCredentials]
-        },
-        {
-            path: '/untappd/beer-matcher/:id',
-            name: 'untappd-beermatcher-show',
-            component: () => import('@/views/Untappd/BeerMatcher/BeerMatcherResult.vue'),
-            beforeEnter: [hasValidUntappdCredentials]
-        },
+        // EN
+        ...routes.map((route) => ({
+            path: '/en/' + route.path,
+            name: 'en_' + route.name,
+            nonTranslatedName: route.name,
+            component: route.component,
+            beforeEnter: [...route.beforeEnter, localeChanger]
+        })),
+
+        // nl
+        ...routes.map((route) => ({
+            path: '/nl/' + route.path,
+            name: 'nl_' + route.name,
+            nonTranslatedName: route.name,
+            component: route.component,
+            beforeEnter: [...route.beforeEnter, localeChanger]
+        })),
+
+        // No Locale
+        ...routes.map((route) => ({
+            path: '/' + route.path,
+            redirect: {
+                name: 'nl_' + route.name
+            },
+            name: route.name
+        })),
+
         {
             path: '/oauth/redirect',
             name: 'oauth-redirect',
@@ -90,11 +129,11 @@ const router = createRouter({
             path: '/oauth/callback',
             name: 'oauth-callback',
             component: () => import('@/views/OAuth/Callback.vue')
-        },
-        {
-            path: '/:pathMatch(.*)*',
-            name: 'not-found',
-            redirect: '/home',
+            // },
+            // {
+            //     path: '/:pathMatch(.*)*',
+            //     name: 'not-found',
+            //     redirect: '/nl/home',
         }
     ]
 })

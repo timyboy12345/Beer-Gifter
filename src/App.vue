@@ -1,28 +1,42 @@
 <template>
+  <metainfo>
+    <template v-slot:title="{ content }">{{ content ? `${content} | Beer Gifter` : `Beer Gifter` }}</template>
+  </metainfo>
+
   <header class="w-full bg-primary-600 flex flex-col lg:flex-row lg:items-center p-4 mb-4">
-    <RouterLink to="/" class="font-bold mr-8 text-primary-900">
+    <LocalizedRouterLink name="home" class="font-bold mr-8 text-primary-900">
       Beer Gifter
       <span class="text-sm font-light opacity-50">v{{ appVersion }}</span>
-    </RouterLink>
+    </LocalizedRouterLink>
 
     <div class="wrapper text-sm lg:text-md lg:md-0 text-primary-700">
       <nav class="flex flex-row gap-x-4 break-keep whitespace-nowrap overflow-scroll" v-if="showMenuLinks">
         <!--        <RouterLink class="block" v-if="!userStore.isLoggedIn" to="/">Home</RouterLink>-->
-        <RouterLink active-class="text-primary-900" class="hover:text-primary-800 transition duration:100 block"
-                    to="/untappd/dashboard">Algemene informatie
-        </RouterLink>
-        <RouterLink active-class="text-primary-900" class="hover:text-primary-800 transition duration:100 block"
-                    to="/untappd/beers">Bieren
-        </RouterLink>
-        <RouterLink active-class="text-primary-900" class="hover:text-primary-800 transition duration:100 block"
-                    to="/untappd/venues">Locaties
-        </RouterLink>
-        <RouterLink active-class="text-primary-900" class="hover:text-primary-800 transition duration:100 block"
-                    to="/untappd/checkins">Checkins
-        </RouterLink>
-        <RouterLink active-class="text-primary-900" class="hover:text-primary-800 transition duration:100 block"
-                    to="/untappd/beer-matcher">Beer Matcher
-        </RouterLink>
+        <LocalizedRouterLink active-class="text-primary-900"
+                             class="hover:text-primary-800 transition duration:100 block"
+                             name="untappd-dashboard">
+          {{ $t('generic.genericInformation') }}
+        </LocalizedRouterLink>
+        <LocalizedRouterLink active-class="text-primary-900"
+                             class="hover:text-primary-800 transition duration:100 block"
+                             name="untappd-beers">
+          {{ $t('generic.beers') }}
+        </LocalizedRouterLink>
+        <LocalizedRouterLink active-class="text-primary-900"
+                             class="hover:text-primary-800 transition duration:100 block"
+                             name="untappd-venues">
+          {{ $t('generic.venues') }}
+        </LocalizedRouterLink>
+        <LocalizedRouterLink active-class="text-primary-900"
+                             class="hover:text-primary-800 transition duration:100 block"
+                             name="untappd-checkins">
+          {{ $t('generic.checkins') }}
+        </LocalizedRouterLink>
+        <LocalizedRouterLink active-class="text-primary-900"
+                             class="hover:text-primary-800 transition duration:100 block"
+                             name="untappd-beermatcher-index">
+          {{ $t('generic.beerMatcher') }}
+        </LocalizedRouterLink>
       </nav>
     </div>
   </header>
@@ -60,6 +74,25 @@
         </div>
       </div>
     </transition>
+
+    <div class="w-full my-4">
+      <div class="text-sm text-gray-600 mb-2">{{ $t('generic.change_language') }}</div>
+
+      <div class="flex flex-row gap-4">
+        <RouterLink
+            @click="handleLocaleChange(locale.locale)"
+            v-for="locale of locales"
+            :to="translateRoute(locale.locale)"
+            class="rounded-full bg-white w-8 h-8 overflow-hidden"
+        >
+          <img
+              :src="`https://flagcdn.com/${locale.flag}.svg`"
+              alt="Flag of The Netherlands"
+              class="w-full h-full object-cover"
+          >
+        </RouterLink>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -68,13 +101,27 @@ import {useUserStore} from "@/stores/user";
 import {useModalStore} from "@/stores/modal";
 import BeerMatchComponent from "@/components/modals/BeerMatchComponent.vue";
 import LoadingModal from "@/components/modals/LoadingModal.vue";
+import LocalizedRouterLink from "@/components/LocalizedRouterLink.vue";
+import {useMeta} from "vue-meta";
+import {useI18n} from 'vue-i18n'
 
 export default {
-  components: {LoadingModal, BeerMatchComponent},
+  components: {LocalizedRouterLink, LoadingModal, BeerMatchComponent},
   setup() {
     const userStore = useUserStore();
     const modalStore = useModalStore();
     const appVersion = userStore.version;
+
+    const {t} = useI18n()
+    useMeta({
+      title: t('home.seo_title'),
+      description: t('home.seo_description'),
+      og: {
+        title: t('home.seo_title'),
+        description: t('home.seo_description')
+      },
+      htmlAttrs: {lang: 'nl', amp: false}
+    })
 
     return {userStore, modalStore, appVersion}
   },
@@ -84,6 +131,17 @@ export default {
     },
     showModal() {
       return this.modalStore.hasItems;
+    },
+    locales() {
+      return [
+        {
+          flag: 'gb',
+          locale: 'en'
+        }, {
+          flag: 'nl',
+          locale: 'nl'
+        }
+      ];
     }
   },
   methods: {
@@ -92,6 +150,20 @@ export default {
     },
     goBackModal() {
       this.modalStore.back();
+    },
+    translateRoute(locale) {
+      if (this.$route.name) {
+        const routeName = this.$route.name
+            .replace('nl_', '')
+            .replace('en_', '');
+
+        return {name: locale + '_' + routeName};
+      } else {
+        return {name: 'nl_home'};
+      }
+    },
+    handleLocaleChange(locale) {
+      this.$i18n.locale = locale;
     }
   }
 }

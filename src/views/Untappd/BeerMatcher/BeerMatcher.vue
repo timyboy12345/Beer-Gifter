@@ -1,17 +1,13 @@
 <template>
   <div>
-    <h1 class="text-2xl font-bold text-primary-800">Beer Matcher</h1>
-    <p class="text-gray-800 text-sm mt-2">
-      Zoek op deze pagina naar een biertje wat je ergens ziet staan en kijk of het matcht met wat {{
-        userStore.userName
-      }} normaal drinkt.
-    </p>
+    <h1 class="text-2xl font-bold text-primary-800">{{ $t('untappd_beermatcher.header') }}</h1>
+    <p class="text-gray-800 text-sm mt-2">{{ $t('untappd_beermatcher.content', {name: userStore.userName}) }}</p>
 
     <FormInput
         class="mt-8"
         :value="i"
-        label="Zoek op biernaam"
-        placeholder="Naam van biertje"
+        :label="$t('untappd_beermatcher.input_label')"
+        :placeholder="$t('untappd_beermatcher.input_placeholder')"
         @input.self="(e) => i = e"
         @keyup.enter="search()"
         :disabled="searching"
@@ -21,8 +17,8 @@
         class="my-4"
         v-if="foundBeers && foundBeers.length > 0"
         :beers="foundBeers"
-        header="Gevonden biertjes"
-        :subheader="`${foundBeers.length} biertjes gevonden`"
+        :header="$t('untappd_beermatcher.found_beers_header')"
+        :subheader="$t('untappd_beermatcher.found_beers_subheader', {count: foundBeers.length})"
         @select.self="handleSelect"
         :should-hotlink="false"
         :is-interactive="true"
@@ -31,8 +27,8 @@
     <Alert
         class="mt-4"
         v-if="foundBeers && foundBeers.length === 0"
-        header="Geen biertjes gevonden"
-        content="Er zijn geen biertjes gevonden voor deze zoekterm. Probeer een andere zoekterm, het zoeken werkt het best als je de volgende structuur aanhoudt: '[Biernaam] [Brouwerij]'"
+        :header="$t('untappd_beermatcher.no_beers_found_header')"
+        :content="$t('untappd_beermatcher.no_beers_found_content')"
     ></Alert>
   </div>
 </template>

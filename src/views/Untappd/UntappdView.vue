@@ -7,23 +7,29 @@
 
     <FormInput
         class="my-4"
-        label="Beer Matcher"
-        subheader="Check of een biertje bij de smaak van deze persoon past."
-        placeholder="Naam van bier (+ Brouwerij)"
+        :label="$t('untappd_home.beermatcher_label')"
+        :subheader="$t('untappd_home.beermatcher_content')"
+        :placeholder="$t('untappd_home.beermatcher_placeholder')"
         :value="searchInput"
         @input.self="(e) => searchInput = e"
         @keyup.enter="search()"
     ></FormInput>
 
     <div class="grid lg:grid-cols-2 gap-4 my-4">
-      <BeerList header="Favoriete Biertjes" subheader="Deze biertjes zijn het hoogst beoordeeld."
-                header-link="untappd-beers" :beers="favoriteBeers"></BeerList>
-      <BeerList header="Meest Gedronken Biertjes" subheader="Deze biertjes zijn het vaakst ingecheckt."
-                header-link="untappd-beers" :beers="mostDrankBeers"></BeerList>
-      <VenueList header="Favoriete Locaties"
-                 subheader="Op deze locaties heeft deze gebruiker het vaakst bier ingecheckt."
-                 header-link="untappd-venues" :venues="favoriteVenues"></VenueList>
-      <BreweryList header="Favoriete Brouwerijen" subheader="Van deze brouwerijen zijn de meeste biertjes ingecheckt."
+      <BeerList :header="$t('untappd_home.favorite_beers_header')"
+                :subheader="$t('untappd_home.favorite_beers_subheader')"
+                header-link="untappd-beers"
+                :beers="favoriteBeers"></BeerList>
+      <BeerList :header="$t('untappd_home.most_drank_beers_header')"
+                :subheader="$t('untappd_home.most_drank_beers_subheader')"
+                header-link="untappd-beers"
+                :beers="mostDrankBeers"></BeerList>
+      <VenueList :header="$t('untappd_home.favorite_venues_header')"
+                 :subheader="$t('untappd_home.favorite_venues_subheader')"
+                 header-link="untappd-venues"
+                 :venues="favoriteVenues"></VenueList>
+      <BreweryList :header="$t('untappd_home.favorite_breweries_header')"
+                   :subheader="$t('untappd_home.favorite_breweries_subheader')"
                    :breweries="favoriteBreweries"></BreweryList>
     </div>
   </div>
@@ -36,6 +42,8 @@ import VenueList from "@/components/lists/VenueList.vue";
 import BreweryList from "@/components/lists/BreweryList.vue";
 import FormInput from "../../components/FormInput.vue";
 import router from "../../router";
+import {useI18n} from "vue-i18n";
+import {useMeta} from "vue-meta";
 
 export default {
   components: {FormInput, BeerList, VenueList, BreweryList},
@@ -46,6 +54,18 @@ export default {
   },
   setup() {
     const userStore = useUserStore();
+
+    const {t} = useI18n()
+    useMeta({
+      title: t('untappd_home.seo_title'),
+      description: t('untappd_home.seo_description'),
+      og: {
+        title: t('untappd_home.seo_title'),
+        description: t('untappd_home.seo_description')
+      },
+      htmlAttrs: {lang: 'nl', amp: false}
+    })
+
     return {userStore};
   },
   computed: {

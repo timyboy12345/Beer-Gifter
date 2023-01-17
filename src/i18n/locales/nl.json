@@ -1,0 +1,88 @@
+{
+  "generic": {
+    "genericInformation": "Algemene informatie",
+    "beers": "Bieren",
+    "venues": "Locaties",
+    "checkins": "Checkins",
+    "beerMatcher": "Beer Matcher",
+    "username": "Gebruikersnaam",
+    "change_language": "Verander van taal"
+  },
+  "home": {
+    "title": "Beer Gifter",
+    "seo_title": "Home",
+    "seo_description": "Beer Gifter is dé Nederlandse website om op basis van iemands Untappd-profiel te kijken welke biertjes hij/zij nog meer lekker zal vinden.",
+    "subTitle": "Vind het ideale biertje voor een goede vriend, op basis van hun Untappd-profiel",
+    "notloggedin_title": "Hoe werkt Beer Gifter?",
+    "notloggedin_content": "Weet je niet wat je moet kopen voor je bier-drinkende vriend? We kennen het probleem! Maar vrees niet, we hebben deze tool ontworpen voor precies dit doel. Voer een untappd-username in en zie welk biertjes deze persoon graag (en niet graag) drinkt. Zo is het net alsof je verstand hebt van bier en precies weet wat je moet kopen.",
+    "loggedin_title": "Beer Gifter",
+    "loggedin_content": "Weet je niet wat je moet kopen voor je bier-drinkende vriend? We kennen het probleem! Maar vrees niet, we hebben deze tool ontworpen voor precies dit doel. Voer een untappd-username in en zie welk biertjes deze persoon graag (en niet graag) drinkt. Zo is het net alsof je verstand hebt van bier en precies weet wat je moet kopen.",
+    "login_using_untappd": "Log in met Untappd",
+    "sub1_title": "Hoe werkt Beer Gifter?",
+    "sub1_content": "Nadat je zelf bent ingelogd met je Untappd-account (om misbruik te voorkomen) kan je een Untappd-gebruikersnaam invoeren. Je ziet dan in verschillende overzichten dingen die je misschien op weg kunnen helpen om het perfecte cadeau te geven, zoals favoriete locaties om bier te drinken, vaakst gedronken biertjes en meer. Maar het allerbelangrijkste: Zoeken op biernaam. Voer de naam van een willekeurig biertje in en bekijk of dit biertje past bij jou vriend/familielid/partner/....",
+    "sub2_title": "Is Beer Gifter waterdicht?",
+    "sub2_content": "Nee! Zeker niet. We proberen je vooral op weg te helpen om een leuk biertje te vinden, of een heel bierpakket. Maar bier is complex, het ene biertje van type X is het andere biertje van type X niet. Dus vaar niet 100% op deze tool, maar probeer ook zelf logisch na te denken.",
+    "sub3_title": "Waarom moet ik inloggen met een Untappd-account?",
+    "sub3_content": "Voornamelijk om misbruik te voorkomen. Helaas mogen we per uur maar 100x een vraag stellen aan de Untappd API, maar als je bent ingelogd geld deze 100x alleen voor jou, dus elke gebruiker op ons platform kan 100x per uur een biertje checken, informatie opvragen of gewoon kijken naar de statistieken.",
+    "sub4_title": "Wat als ik geen biertjes kan vinden?",
+    "sub4_content": "Sta je in een bierspeciaalzaak? Top! De meeste medewerkers van zo'n winkel weten heel veel van bier en kunnen je vast helpen. Vertel wat je zoekt, vraag of ze je kunnen helpen op basis van een Untappd-profiel of vraag of ze goede tips hebben om het perfecte biertje te vinden. Sta je in de supermarkt? Dan wensen we je vooral veel succes! Vaak hebben de mensen die hier werken niet heel veel verstand van bier, maar het is een poging waard iemand te vragen.",
+    "limitation_warning_title": "Er zijn al gegevens opgehaald",
+    "limitation_warning_content": "Je kan maar van een paar mensen per uur gegevens ophalen. Je hebt de gegevens van {name} al opgehaald.",
+    "limitation_warning_proceed": "Bekijk alle gegevens van {name}",
+    "limitation_warning_delete": "Of verwijder alle lokale gegevens.",
+    "search_by_username": "Zoek op gebruikersnaam"
+  },
+  "untappd_home": {
+    "seo_title": "Dashboard",
+    "seo_description": "Bekijk welke biertjes deze persoon het vaakst drinkt, op welke plekken hij dit doet en welke brouwerijen de beste cijfers krijgen.",
+    "beermatcher_label": "Beer Matcher",
+    "beermatcher_content": "Check of een biertje bij de smaak van deze persoon past.",
+    "beermatcher_placeholder": "Naam van bier (+ Brouwerij)",
+    "favorite_beers_header": "Favoriete Biertjes",
+    "favorite_beers_subheader": "Deze biertjes zijn het hoogst beoordeeld.",
+    "most_drank_beers_header": "Meest Gedronken Biertjes",
+    "most_drank_beers_subheader": "Deze biertjes zijn het vaakst ingecheckt",
+    "favorite_venues_header": "Favoriete Locaties",
+    "favorite_venues_subheader": "Op deze locaties heeft deze gebruiker het vaakst bier ingecheckt.",
+    "favorite_breweries_header": "Favoriete Brouwerijen",
+    "favorite_breweries_subheader": "Van deze brouwerijen zijn de meeste biertjes ingecheckt."
+  },
+  "untappd_loading": {
+    "seo_title": "Biertjes worden geladen...",
+    "seo_description": "We halen alle data op van Untappd, dit kan even duren...",
+    "being_retrieved": "Alle data wordt opgehaald...",
+    "status": "{count} checkins opgehaald"
+  },
+  "untappd_beers": {
+    "seo_title": "Biertjes",
+    "seo_description": "Bekijk welke biertjes deze persoon al eens heeft gedronken en welke score daar destijds aan is gegeven.",
+    "header": "Alle Biertjes",
+    "subheader": "{count} biertjes",
+    "favorite_breweries": "Favoriete Brouwerijen"
+  },
+  "untappd_checkins": {
+    "seo_title": "Alle Checkins",
+    "seo_description": "Bekijk een lijst met alle checkins die deze persoon ooit heeft opgestuurd.",
+    "header": "Alle Checkins",
+    "subheader": "{count} checkins"
+  },
+  "untappd_venues": {
+    "seo_title": "Alle Locaties",
+    "seo_description": "Bekijk op welke plekken deze persoon al eens bier heeft gedronken.",
+    "header": "Alle Locaties",
+    "subheader": "{count} verschillende locaties",
+    "favorite_cities": "Favoriete Steden"
+  },
+  "untappd_beermatcher": {
+    "seo_title": "Beer Matcher",
+    "seo_description": "Met Beer Matcher zoek je makkelijk hét perfecte volgende biertje, zoek op naam en bekijk scores, data en een onze voorspelling.",
+    "header": "Beer Matcher",
+    "content": "Zoek op deze pagina naar een biertje wat je ergens ziet staan en kijk of het matcht met wat {name} normaal drinkt.",
+    "input_label": "Zoek op biernaam",
+    "input_placeholder": "Naam van biertje",
+    "found_beers_header": "Gevonden Biertjes",
+    "found_beers-subheader": "{count} biertjes gevonden",
+    "no_beers_found_header": "Geen biertjes gevonden",
+    "no_beers_found_content": "Er zijn geen biertjes gevonden voor deze zoekterm. Probeer een andere zoekterm, het zoeken werkt het best als je de volgende structuur aanhoudt: '[Biernaam] [Brouwerij]'"
+  }
+}
