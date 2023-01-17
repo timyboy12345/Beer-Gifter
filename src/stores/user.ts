@@ -6,6 +6,7 @@ export const useUserStore = defineStore('user', {
         user: null,
         userName: null,
         importing: false,
+        cart: [],
         checkins: [],
         beers: [],
         venues: [],
@@ -14,11 +15,9 @@ export const useUserStore = defineStore('user', {
     }),
     actions: {
         setUser(user: any) {
-            localStorage.setItem('user', JSON.stringify(user));
             this.user = user;
         },
         setUserName(userName: string) {
-            localStorage.setItem('userName', userName);
             // @ts-ignore
             this.userName = userName;
         },
@@ -29,43 +28,30 @@ export const useUserStore = defineStore('user', {
             // @ts-ignore
             this.checkins.push(checkin)
         },
+        addToCart(beer: object) {
+            // @ts-ignore
+            this.cart.push(beer);
+        },
+        removeFromCart(beer: object) {
+            // @ts-ignore
+            const b = this.cart.find((cartBeer) => cartBeer.bid === beer.bid);
+            // @ts-ignore
+            const i = this.cart.indexOf(b);
+
+            this.cart.splice(i, 1);
+        },
+        cartIncludes(beer: object){
+            // @ts-ignore
+            return this.cart.find((cartBeer) => cartBeer.bid === beer.bid) !== undefined;
+        },
         addCheckins(checkins: any[]) {
             // @ts-ignore
             this.checkins = this.checkins.concat(checkins)
-
-            const c = localStorage.getItem('checkins');
-            const j: any[] = c ? JSON.parse(c) : [];
-            const n = j.concat(checkins);
-            localStorage.setItem('checkins', JSON.stringify(n));
         },
         resetCheckins() {
             this.checkins = [];
-
-            localStorage.removeItem('user');
-            localStorage.removeItem('userName');
-            localStorage.removeItem('checkins');
-        },
-        hasCachedResults() {
-            return localStorage.getItem('user')
-                && localStorage.getItem('userName')
-                && localStorage.getItem('checkins');
-        },
-        restoreCachedResults() {
-            // @ts-ignore
-            this.setUser(JSON.parse(localStorage.getItem('user')));
-            // @ts-ignore
-            this.setUserName(localStorage.getItem('userName'));
-
-            // @ts-ignore
-            this.checkins = JSON.parse(localStorage.getItem('checkins'));
-
-            this.recalculate();
         },
         resetAll() {
-            localStorage.removeItem('user');
-            localStorage.removeItem('userName');
-            localStorage.removeItem('checkins');
-
             this.breweries = [];
             this.venues = [];
             this.beers = [];
@@ -94,7 +80,7 @@ export const useUserStore = defineStore('user', {
                         const score = firstCheckin.length > 0 ? firstCheckin[0].rating_score : null;
 
                         // @ts-ignore
-                        beers[b.bid] ={
+                        beers[b.bid] = {
                             ...b,
                             // @ts-ignore
                             count: this.checkins.filter((ci: any) => ci.beer.bid === b.bid).length,
@@ -112,7 +98,7 @@ export const useUserStore = defineStore('user', {
                     // @ts-ignore
                     if (!(checkin.venue.venue_id in venues) && checkin.venue.location) {
                         // @ts-ignore
-                        venues[checkin.venue.venue_id] ={
+                        venues[checkin.venue.venue_id] = {
                             // @ts-ignore
                             ...checkin.venue,
                             // @ts-ignore
@@ -147,5 +133,12 @@ export const useUserStore = defineStore('user', {
         // @ts-ignore
         fullName: (state) => state.user ? `${state.user.first_name} ${state.user.last_name}` : null,
         isLoggedIn: (state) => Boolean(state.user),
+    },
+    persist: {
+        enabled: true,
+        strategies: [{
+            storage: localStorage,
+            paths: ['checkins', 'cart', 'user', 'userName']
+        }]
     }
 })

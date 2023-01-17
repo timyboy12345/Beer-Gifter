@@ -5,7 +5,7 @@
         <Spinner/>
       </div>
 
-      Informatie wordt opgehaald
+      {{ $t('loading_modal.information_being_retrieved') }}
     </div>
   </div>
 </template>

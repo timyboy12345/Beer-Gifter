@@ -6,7 +6,9 @@
     "checkins": "Checkins",
     "beerMatcher": "Beer Matcher",
     "username": "Gebruikersnaam",
-    "change_language": "Verander van taal"
+    "change_language": "Verander van taal",
+    "cart": "Karretje",
+    "drank_x_times": "{count}x gedronken"
   },
   "home": {
     "title": "Beer Gifter",
@@ -84,5 +86,51 @@
     "found_beers-subheader": "{count} biertjes gevonden",
     "no_beers_found_header": "Geen biertjes gevonden",
     "no_beers_found_content": "Er zijn geen biertjes gevonden voor deze zoekterm. Probeer een andere zoekterm, het zoeken werkt het best als je de volgende structuur aanhoudt: '[Biernaam] [Brouwerij]'"
+  },
+  "untappd_cart": {
+    "seo_title": "Karretje",
+    "seo_description": "Verzamel alle biertjes die je wil kopen in je karretje, zodat je in de winkel een makkelijk overzicht hebt van de biertjes die je wil kopen.",
+    "header": "Jouw Karretje",
+    "subheader": "Je hebt {count} biertjes verzameld"
+  },
+  "loading_modal": {
+    "information_being_retrieved": "Informatie wordt opgehaald"
+  },
+  "beermatch_modal": {
+    "show_on_untappd": "Bekijk op Untappd",
+    "total_checkins": "Totale Check-ins",
+    "average_scores": "Gemiddelde Score",
+    "total_drinkers": "Aantal drinkers",
+    "total_checkins_this_month": "Check-ins deze maand",
+    "did_you_drink_it": "Heb jij hem gedronken?",
+    "brewed_since": "Gebrouwen sinds",
+    "our_recommendation": "Onze aanbeveling",
+    "add_to_cart": "Voeg toe aan karretje",
+    "remove_from_cart": "Uit karretje halen",
+    "same_type_beers_header": "Vergelijkbare biertjes",
+    "same_type_beers_subheader": "Dit zijn andere biertjes die {name} van dit type heeft gedronken.",
+    "no_same_type_beers_found_header": "Geen vergelijkbare biertjes",
+    "no_same_type_beers_found_content": "We konden geen biertjes vinden die {name} heeft gedronken die vergelijkbaar zijn met dit biertje.",
+    "alternative_beers_header": "Alternatieve biertjes volgens Untappd",
+    "alternative_beers_subheader": "Untappd geeft aan dat deze biertjes vergelijkbaar zijn met dit biertje.",
+    "match": {
+      "already_drank": "Let op: Dit biertje is al eens gedronken door {name}.",
+      "already_drank_score": "Het biertje kreeg toen een {score} van de 5.",
+      "already_drank_info": "Bierliefhebbers vinden het vaak leuk om nieuwe biertjes te ontdekken, maar een paar dubbele kan geen kwaad.",
+      "our_advice": "Ons oordeel:",
+      "our_advice_general": "{name} matcht voor {score}% met dit biertje.",
+      "headline": {
+        "70": "Moet kunnen!",
+        "60":"Kan, maar er kunnen betere opties zijn.",
+        "50": "Het past, maar niet fantastisch.",
+        "lower": "Wij raden het niet aan, maar het zou kunnen dat we er totaal naast zitten."
+      },
+      "no_similar_beers": "{name} heeft nog niet eerder een vergelijkbaar biertje beoordeeld, dus we kunnen niet inschatten of hij/zij het lekker gaat vinden. Misschien is het een poging waard.",
+      "weighted_rating_score": {
+        "2": "Maar pas op, het biertje wordt niet heel hoog gerate door andere gebruikers. Misschien is er iets vergelijkbaars?",
+        "2.5": "Maar het zou kunnen dat er een biertje is wat beter wordt beoordeeld door andere gebuikers.",
+        "4.2": "Bovendien krijgt dit biertje uitstekende beoordelingen van andere gebruikers, bonuspunten!"
+      }
+    }
   }
 }

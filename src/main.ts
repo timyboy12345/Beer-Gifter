@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 
 import App from './App.vue'
 
@@ -6,29 +6,37 @@ import './assets/main.css'
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import {createPinia} from 'pinia'
+import piniaPersist from 'pinia-plugin-persist'
+import router from './router'
+import untappdPlugin from './plugins/untappdPlugin.js';
+import beerPopup from './plugins/beerPopup.js';
+import * as Sentry from "@sentry/vue";
+import {BrowserTracing} from "@sentry/tracing";
+import i18n from "@/i18n";
+import {createMetaManager} from 'vue-meta'
 
 const app = createApp(App)
 
-import { createPinia } from 'pinia'
-app.use(createPinia())
+// Pinia
+const pinia = createPinia();
+pinia.use(piniaPersist)
+app.use(pinia);
 
-import router from './router'
+// Router
 app.use(router)
 
+// Axios
 app.use(VueAxios, axios);
 app.provide('axios', app.config.globalProperties.axios) // provide 'axios'
 
-// @ts-ignore
-import untappdPlugin from './plugins/untappdPlugin.js';
+// Untappd
 app.use(untappdPlugin);
 
-// @ts-ignore
-import beerPopup from './plugins/beerPopup.js';
+// Popups
 app.use(beerPopup);
 
-import * as Sentry from "@sentry/vue";
-import { BrowserTracing } from "@sentry/tracing";
-
+// Sentry
 // @ts-ignore
 if (typeof process === 'object' && process.env.ENVIRONMENT === 'production') {
     Sentry.init({
@@ -48,10 +56,10 @@ if (typeof process === 'object' && process.env.ENVIRONMENT === 'production') {
     });
 }
 
-import i18n from "@/i18n";
+// i18n
 app.use(i18n)
 
-import { createMetaManager } from 'vue-meta'
+// Meta Tags
 app.use(createMetaManager())
 
 app.mount('#app')

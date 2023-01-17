@@ -6,14 +6,16 @@
     "checkins": "Checkins",
     "beerMatcher": "Beer Matcher",
     "username": "Username",
-    "change_language": "Change Language"
+    "change_language": "Change Language",
+    "cart": "Cart",
+    "drank_x_times": "Drank {count}x times"
   },
   "home": {
     "title": "Beer Gifter",
     "seo_title": "Home",
     "seo_description": "Beer Gifter is the perfect website to see, based on someones Untappd-profile, what beers they are most likely to enjoy drinking and which are not.",
     "subTitle": "Find the ideal beer for your friend, colleague or family member, based on their Untappd-profile",
-    "notloggedin_title": "How does eer Gifter work?",
+    "notloggedin_title": "How does Beer Gifter work?",
     "notloggedin_content": "Don't know what to buy for you beer-loving friend? We know the problem! But fear not, we have created this tool with only one goal in mind: To solve this problem! Enter an Untappd-username and see which beers this person likes to drink (and which beers he does not like to drink). It will seem like you know what you are doing, but in fact, you have a handy tool to help you.",
     "loggedin_title": "Beer Gifter",
     "loggedin_content": "Don't know what to buy for you beer-loving friend? We know the problem! But fear not, we have created this tool with only one goal in mind: To solve this problem! Enter an Untappd-username and see which beers this person likes to drink (and which beers he does not like to drink). It will seem like you know what you are doing, but in fact, you have a handy tool to help you.",
@@ -84,5 +86,51 @@
     "found_beers-subheader": "{count} beers found",
     "no_beers_found_header": "No beers were found",
     "no_beers_found_content": "We couldn't find any beers for these search terms. Try other terms or try adding the name of the brewery. Searching works best if you use the following structure: '[Name of beer] [Name of brewery]'"
+  },
+  "untappd_cart": {
+    "seo_title": "Cart",
+    "seo_description": "Collect all beers you want to buy in this cart, so you can easily see what you want to buy once you are in the store.",
+    "header": "All Beers in your Cart",
+    "subheader": "{count} items in cart"
+  },
+  "loading_modal": {
+    "information_being_retrieved": "Informatie wordt opgehaald"
+  },
+  "beermatch_modal": {
+    "show_on_untappd": "View on ",
+    "total_checkins": "Totale Check-ins",
+    "average_scores": "Average Score",
+    "total_drinkers": "Number of drinkers",
+    "total_checkins_this_month": "Check-ins this month",
+    "did_you_drink_it": "Did you drink it?",
+    "brewed_since": "Brewn since",
+    "our_recommendation": "Our recommendation",
+    "add_to_cart": "Add to cart",
+    "remove_from_cart": "Remove from cart",
+    "same_type_beers_header": "Similar beers",
+    "same_type_beers_subheader": "These are some other beers that {name} has had from this type of beer.",
+    "no_same_type_beers_found_header": "No similar beers",
+    "no_same_type_beers_found_content": "We couldn't find any similar beers that {name} has had since he/she started using untappd.",
+    "alternative_beers_header": "Alternative beers according to Untappd",
+    "alternative_beers_subheader": "Untappd has given us these beers that are similar to this beer.",
+    "match": {
+      "already_drank": "Attention: {name} has already checked in this beer at least one time.",
+      "already_drank_score": "The beer got a score of {score} (out of 5).",
+      "already_drank_info": "Beer lovers enjoy tasting different beers, so gifting a lot of beers that they have already had may not be as fun as tasting a new beer, but a few double check-ins can't hurt.",
+      "our_advice": "Our advice:",
+      "our_advice_general": "{name} matches {score}% with this beer.",
+      "headline": {
+        "70": "It's a good option!",
+        "60": "Possible, but there could be better options.",
+        "50": "It's possible, but definitely not great.",
+        "lower": "We don't recommend this beer, but we could be wrong."
+      },
+      "no_similar_beers": "{name} has never had a similar beer, so we can't decide if he/she will like this beer. It could be worth a try.",
+      "weighted_rating_score": {
+        "2": "But watch out, the beer has not received great reviews from other Untappd users. Maybe there is something similar with a better overall score?",
+        "2.5": "But there are probably similar beers out there that have a higher score among all Untappd users.",
+        "4.2": "Extra points: The beer receives exceptional scores from other Untappd users, always a great indication!"
+      }
+    }
   }
 }

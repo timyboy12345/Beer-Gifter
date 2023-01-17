@@ -37,6 +37,11 @@
                              name="untappd-beermatcher-index">
           {{ $t('generic.beerMatcher') }}
         </LocalizedRouterLink>
+        <LocalizedRouterLink active-class="text-primary-900"
+                             class="hover:text-primary-800 transition duration:100 block"
+                             name="untappd-cart">
+          {{ $t('generic.cart') }}
+        </LocalizedRouterLink>
       </nav>
     </div>
   </header>
@@ -48,7 +53,7 @@
       <div v-if="showModal" class="fixed z-100 left-0 top-0 right-0 bottom-0">
         <div @click="closeModal" class="bg-gray-800 bg-opacity-30 absolute w-full h-full top-0 left-0"></div>
 
-        <div @click.self="closeModal" class="relative mx-auto max-w-2xl p-4 w-full h-full">
+        <div @click.self="closeModal" class="relative mx-auto max-w-4xl p-4 w-full h-full">
           <div class="relative bg-white overflow-scroll rounded border border-gray-100 w-full h-full">
             <div @click="closeModal" class="cursor-pointer fixed right-6 top-6 bg-white p-2 rounded">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

@@ -39,6 +39,8 @@ import Alert from "../../../components/Alert.vue";
 import {inject} from "vue";
 import {useUserStore} from "../../../stores/user";
 import {useModalStore} from "../../../stores/modal";
+import {useI18n} from "vue-i18n";
+import {useMeta} from "vue-meta";
 
 export default {
   components: {Alert, BeerList, FormInput},
@@ -53,6 +55,17 @@ export default {
     const searchUntappdBeer = inject('searchUntappdBeer');
     const userStore = useUserStore();
     const modalStore = useModalStore();
+
+    const {t} = useI18n()
+    useMeta({
+      title: t('untappd_beermatcher.seo_title'),
+      description: t('untappd_beermatcher.seo_description'),
+      og: {
+        title: t('untappd_beermatcher.seo_title'),
+        description: t('untappd_beermatcher.seo_description')
+      },
+      htmlAttrs: {lang: 'nl', amp: false}
+    })
 
     return {searchUntappdBeer, userStore, modalStore};
   },

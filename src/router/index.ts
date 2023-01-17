@@ -1,40 +1,11 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import {useUserStore} from "@/stores/user";
-import {useI18nStore} from "@/stores/i18n";
 
-function localeChanger(to: any) {
-    const i18nStore = useI18nStore();
-
-    if (to.name) {
-        i18nStore.setLocale('en');
-    }
-}
-
-function hasValidUntappdCredentials(to: any) {
+function hasValidUntappdCredentials() {
     const userStore = useUserStore();
 
     if (!userStore.isLoggedIn) {
-        if (userStore.hasCachedResults()) {
-            userStore.restoreCachedResults();
-            return to;
-        } else {
-            return {name: 'nl_home'}
-        }
-    }
-}
-
-function restoreData() {
-    const userStore = useUserStore();
-
-    try {
-        if (!userStore.isLoggedIn && userStore.checkins.length === 0) {
-            if (userStore.hasCachedResults()) {
-                userStore.restoreCachedResults();
-            }
-        }
-    } catch (err) {
-        console.error(err);
-        window.alert('Error while trying to retrieve results from localstorage');
+        return {name: 'nl_home'}
     }
 }
 
@@ -43,7 +14,7 @@ const routes = [
         name: 'home',
         path: 'home',
         component: () => import('@/views/HomeView.vue'),
-        beforeEnter: [restoreData]
+        beforeEnter: []
     },
     {
         path: 'untappd/loading',
@@ -76,6 +47,12 @@ const routes = [
         beforeEnter: [hasValidUntappdCredentials]
     },
     {
+        path: 'untappd/cart',
+        name: 'untappd-cart',
+        component: () => import('@/views/Untappd/Cart.vue'),
+        beforeEnter: [hasValidUntappdCredentials]
+    },
+    {
         path: 'untappd/beer-matcher',
         name: 'untappd-beermatcher-index',
         component: () => import('@/views/Untappd/BeerMatcher/BeerMatcher.vue'),
@@ -99,7 +76,7 @@ const router = createRouter({
             name: 'en_' + route.name,
             nonTranslatedName: route.name,
             component: route.component,
-            beforeEnter: [...route.beforeEnter, localeChanger]
+            beforeEnter: [reset, ...route.beforeEnter]
         })),
 
         // nl
@@ -108,7 +85,7 @@ const router = createRouter({
             name: 'nl_' + route.name,
             nonTranslatedName: route.name,
             component: route.component,
-            beforeEnter: [...route.beforeEnter, localeChanger]
+            beforeEnter: [reset, ...route.beforeEnter]
         })),
 
         // No Locale
@@ -137,5 +114,13 @@ const router = createRouter({
         }
     ]
 })
+
+async function reset() {
+    const userStore = useUserStore();
+
+    if (userStore.checkins.length > 0 && userStore.beers.length === 0) {
+        await userStore.recalculate();
+    }
+}
 
 export default router
