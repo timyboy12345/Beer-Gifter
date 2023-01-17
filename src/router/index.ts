@@ -129,11 +129,11 @@ const router = createRouter({
             path: '/oauth/callback',
             name: 'oauth-callback',
             component: () => import('@/views/OAuth/Callback.vue')
-            // },
-            // {
-            //     path: '/:pathMatch(.*)*',
-            //     name: 'not-found',
-            //     redirect: '/nl/home',
+        },
+        {
+            path: '/:pathMatch(.*)*',
+            name: 'not-found',
+            redirect: '/nl/home',
         }
     ]
 })
